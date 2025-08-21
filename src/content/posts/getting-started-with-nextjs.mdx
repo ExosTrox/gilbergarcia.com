@@ -1,0 +1,123 @@
+---
+title: 'Getting Started with Next.js: A Comprehensive Guide'
+date: '2024-01-20'
+excerpt: 'Learn how to build modern web applications with Next.js, from setup to deployment. Perfect for beginners and experienced developers alike.'
+tags: ['nextjs', 'react', 'javascript', 'tutorial']
+author: 'Gilbert Garcia'
+---
+
+Next.js has become one of the most popular React frameworks for building production-ready applications. In this guide, we'll explore why Next.js is so powerful and how to get started.
+
+## What is Next.js?
+
+Next.js is a React framework that provides:
+
+- **Server-Side Rendering (SSR)** - Better SEO and initial load performance
+- **Static Site Generation (SSG)** - Pre-render pages at build time
+- **API Routes** - Build your backend API within the same project
+- **File-based Routing** - Automatic routing based on file structure
+- **Built-in Optimizations** - Image optimization, font optimization, and more
+
+## Setting Up Your First Next.js Project
+
+Let's create a new Next.js application:
+
+```bash
+npx create-next-app@latest my-app
+cd my-app
+npm run dev
+```
+
+This will set up a new Next.js project with all the necessary dependencies.
+
+## Project Structure
+
+A typical Next.js project structure looks like this:
+
+```
+my-app/
+├── app/              # App Router (Next.js 13+)
+├── public/           # Static files
+├── components/       # React components
+├── styles/          # CSS files
+└── package.json     # Dependencies
+```
+
+## Creating Your First Page
+
+In Next.js, pages are created in the `app` directory. Create a new file `app/about/page.tsx`:
+
+```tsx
+export default function AboutPage() {
+  return (
+    <div>
+      <h1>About Us</h1>
+      <p>Welcome to our about page!</p>
+    </div>
+  )
+}
+```
+
+This automatically creates a route at `/about`.
+
+## Adding Dynamic Routes
+
+Dynamic routes are created using square brackets:
+
+```tsx
+// app/blog/[slug]/page.tsx
+export default function BlogPost({ params }) {
+  return <h1>Blog Post: {params.slug}</h1>
+}
+```
+
+## Data Fetching
+
+Next.js provides multiple ways to fetch data:
+
+### Server Components (Recommended)
+
+```tsx
+async function getData() {
+  const res = await fetch('https://api.example.com/data')
+  return res.json()
+}
+
+export default async function Page() {
+  const data = await getData()
+  return <div>{data.title}</div>
+}
+```
+
+## Styling Options
+
+Next.js supports various styling methods:
+
+- CSS Modules
+- Tailwind CSS
+- CSS-in-JS libraries
+- Global CSS
+
+## Deployment
+
+Deploying a Next.js app is straightforward:
+
+```bash
+npm run build
+npm start
+```
+
+Or deploy to Vercel with one click for automatic deployments.
+
+## Best Practices
+
+1. **Use Server Components by default** - They're faster and more efficient
+2. **Optimize images** - Use Next.js Image component
+3. **Implement proper error handling** - Use error boundaries
+4. **Follow accessibility guidelines** - Ensure your app is usable by everyone
+
+## Conclusion
+
+Next.js provides an excellent foundation for building modern web applications. Its built-in optimizations, developer experience, and deployment options make it a great choice for projects of any size.
+
+Start building with Next.js today and experience the difference!
