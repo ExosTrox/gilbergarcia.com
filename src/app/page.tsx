@@ -2,6 +2,8 @@ import Link from 'next/link'
 import { getAllPosts } from '@/lib/posts'
 import PostCard from '@/components/PostCard'
 
+export const dynamic = 'force-static'
+
 export default async function HomePage() {
   const posts = await getAllPosts()
   const recentPosts = posts.slice(0, 3)

@@ -1,6 +1,8 @@
 import { getAllPosts } from '@/lib/posts'
 import PostCard from '@/components/PostCard'
 
+export const dynamic = 'force-static'
+
 export const metadata = {
   title: 'Blog - Gilbert Garcia',
   description: 'All blog posts by Gilbert Garcia',
