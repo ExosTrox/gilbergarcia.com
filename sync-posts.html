@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sync Posts - Gilbert Garcia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+        .info {
+            background: #f3f4f6;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            color: #374151;
+        }
+        textarea {
+            width: 100%;
+            height: 300px;
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            margin: 1rem 0;
+            resize: vertical;
+        }
+        button {
+            padding: 0.75rem 2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-right: 1rem;
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(139, 92, 246, 0.4);
+        }
+        .success {
+            background: #10b981;
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            display: none;
+        }
+        a {
+            color: #8b5cf6;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 Sync Posts Tool</h1>
+        
+        <div class="info">
+            <strong>For Local Development:</strong><br>
+            This tool helps you sync posts between the production admin panel and your local development environment.
+        </div>
+
+        <h3>📥 Export Posts from Admin</h3>
+        <p>Copy this from your browser console after logging into <a href="/admin.html" target="_blank">admin panel</a>:</p>
+        <code style="background: #f3f4f6; padding: 0.5rem; border-radius: 5px; display: block; margin: 0.5rem 0;">
+            copy(localStorage.getItem('blog_posts'))
+        </code>
+
+        <h3 style="margin-top: 1.5rem;">📤 Import Posts to Site</h3>
+        <textarea id="postsData" placeholder="Paste the posts JSON data here..."></textarea>
+        
+        <div>
+            <button onclick="importPosts()">Import to Admin</button>
+            <button onclick="exportForGit()">Generate for Git</button>
+        </div>
+
+        <div class="success" id="successMsg"></div>
+
+        <div class="info" style="margin-top: 2rem;">
+            <strong>Workflow:</strong><br>
+            1. Write posts in <a href="/admin.html">admin panel</a><br>
+            2. Use browser console to export posts<br>
+            3. Paste here and click "Generate for Git"<br>
+            4. Copy the output to data/posts.json<br>
+            5. Run <code>npm run build:static</code><br>
+            6. Commit and push to GitHub
+        </div>
+    </div>
+
+    <script>
+        function importPosts() {
+            const data = document.getElementById('postsData').value;
+            if (!data) {
+                alert('Please paste posts data first');
+                return;
+            }
+            try {
+                JSON.parse(data);
+                localStorage.setItem('blog_posts', data);
+                showSuccess('Posts imported to admin panel successfully!');
+            } catch (e) {
+                alert('Invalid JSON data');
+            }
+        }
+
+        function exportForGit() {
+            const data = document.getElementById('postsData').value;
+            if (!data) {
+                alert('Please paste posts data first');
+                return;
+            }
+            try {
+                const posts = JSON.parse(data);
+                const formatted = JSON.stringify(posts, null, 2);
+                document.getElementById('postsData').value = formatted;
+                showSuccess('Formatted! Copy this to data/posts.json and run: npm run build:static');
+            } catch (e) {
+                alert('Invalid JSON data');
+            }
+        }
+
+        function showSuccess(msg) {
+            const div = document.getElementById('successMsg');
+            div.textContent = msg;
+            div.style.display = 'block';
+            setTimeout(() => div.style.display = 'none', 5000);
+        }
+    </script>
+</body>
+</html>
