@@ -35,8 +35,8 @@ export default function AdminPage() {
       setTags('');
       setEmoji('📝');
       setReadTime('5 min read');
-      setSuccessMessage('✅ Post published successfully!');
-      setTimeout(() => setSuccessMessage(''), 3000);
+      setSuccessMessage('✅ Post published successfully! Run "npm run build:static" to update GitHub Pages.');
+      setTimeout(() => setSuccessMessage(''), 5000);
     }
     setLoading(false);
   };
