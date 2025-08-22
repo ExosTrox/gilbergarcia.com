@@ -33,26 +33,23 @@ The admin panel only works locally on your computer:
 
 ## 📝 Publishing Workflow
 
-### Option 1: Production Admin (Recommended)
+### Option 1: Production Admin (Instant Updates!)
 1. **Write posts online**:
    - Go to https://gilbergarcia.com/admin.html
    - Login with password: kga2801
    - Write and publish posts
+   - **Posts appear instantly on the site!** (stored in browser)
 
-2. **Sync posts to repository**:
+2. **Important**: Posts are saved in your browser's localStorage
+   - They persist across visits
+   - Clear browser data will delete posts
+   - Different browsers = different posts
+
+3. **Backup to Git** (optional but recommended):
    - Open browser console (F12)
    - Run: `copy(localStorage.getItem('blog_posts'))`
-   - Go to https://gilbergarcia.com/sync-posts.html
-   - Paste and click "Generate for Git"
-   - Copy output to `data/posts.json`
-
-3. **Generate and deploy**:
-   ```bash
-   npm run build:static
-   git add .
-   git commit -m "New blog post"
-   git push
-   ```
+   - Save to `data/posts.json` in your repository
+   - Run `npm run build:static` and push to GitHub
 
 ### Option 2: Local Development
 1. **Write posts locally**:

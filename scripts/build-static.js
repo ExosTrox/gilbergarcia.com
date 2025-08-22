@@ -16,7 +16,7 @@ if (fs.existsSync(adminSourcePath)) {
 const cssPath = path.join(__dirname, '../app/globals.css');
 const css = fs.readFileSync(cssPath, 'utf8');
 
-// Generate HTML
+// Generate HTML with dynamic post loading
 const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,46 +39,14 @@ const html = `<!DOCTYPE html>
         </header>
         
         <main>
-            ${posts.length > 0 ? posts.map(post => `
-            <article>
-                <div class="post-meta">
-                    <div class="post-date">
-                        <span class="emoji">${post.emoji || '📝'}</span>
-                        ${post.date} · ${post.readTime || '5 min read'}
-                    </div>
-                </div>
-                ${post.tags && post.tags.length > 0 ? `
-                <div class="tags">
-                    ${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                </div>` : ''}
-                <h2>${post.title}</h2>
-                <p>${post.content}</p>
-                <a href="#" class="read-more">Continue reading</a>
-            </article>
-            `).join('') : `
-            <article>
-                <div class="post-meta">
-                    <div class="post-date">
-                        <span class="emoji">👋</span>
-                        December 15, 2024 · 1 min read
-                    </div>
-                </div>
-                <div class="tags">
-                    <span class="tag">Welcome</span>
-                    <span class="tag">Blog</span>
-                </div>
-                <h2>Welcome to My Blog</h2>
-                <p>This is where I'll share my thoughts on technology, programming, and life. Stay tuned for more content!</p>
-                <a href="#" class="read-more">Continue reading</a>
-            </article>
-            `}
+            <!-- Posts will be loaded dynamically -->
         </main>
 
         <footer>
             <div class="footer-content">
                 <p>© 2024 Gilbert Garcia · Crafted with passion</p>
                 <p style="font-size: 0.85rem; opacity: 0.7; margin-top: 0.5rem;">
-                    Admin panel available locally only · <a href="https://github.com/gilbergarcia/gilbergarcia.com#-local-admin-system" style="color: inherit; text-decoration: underline;">Learn more</a>
+                    Write posts in <a href="/admin.html" style="color: inherit; text-decoration: underline;">admin panel</a>
                 </p>
             </div>
             <div class="social-links">
@@ -89,6 +57,17 @@ const html = `<!DOCTYPE html>
             </div>
         </footer>
     </div>
+    
+    <script>
+        // Initialize posts in localStorage if they don't exist
+        if (!localStorage.getItem('blog_posts')) {
+            const initialPosts = ${JSON.stringify(posts)};
+            if (initialPosts.length > 0) {
+                localStorage.setItem('blog_posts', JSON.stringify(initialPosts));
+            }
+        }
+    </script>
+    <script src="/blog.js"></script>
 </body>
 </html>`;
 
