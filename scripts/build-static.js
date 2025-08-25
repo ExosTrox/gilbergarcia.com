@@ -200,8 +200,8 @@ const html = `<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gilbert Garcia</title>
-    <meta name="description" content="Personal blog by Gilbert Garcia">
+    <title>Gilber Garcia</title>
+    <meta name="description" content="Personal blog by Gilber Garcia">
     <style>${css}</style>
 </head>
 <body>
@@ -210,7 +210,7 @@ const html = `<!DOCTYPE html>
     </button>
     <div class="container">
         <header>
-            <h1>Gilbert Garcia</h1>
+            <h1>Gilber Garcia</h1>
             <p class="subtitle">Engineering elegant solutions to complex problems</p>
             <div style="margin-top: 1rem;">
                 <a href="/admin.html" style="color: #8b5cf6; text-decoration: none; font-size: 0.9rem; padding: 0.5rem 1rem; background: rgba(139, 92, 246, 0.1); border-radius: 8px; display: inline-block;">
@@ -225,7 +225,7 @@ const html = `<!DOCTYPE html>
 
         <footer>
             <div class="footer-content">
-                <p>© 2024 Gilbert Garcia · Crafted with passion</p>
+                <p>© 2024 Gilber Garcia · Crafted with passion</p>
                 <p style="font-size: 0.85rem; opacity: 0.7; margin-top: 0.5rem;">
                     Write posts in <a href="/admin.html" style="color: inherit; text-decoration: underline;">admin panel</a>
                 </p>

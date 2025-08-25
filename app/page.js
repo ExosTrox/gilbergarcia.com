@@ -36,10 +36,28 @@ export default function HomePage() {
   const displayPosts = posts.length > 0 ? posts : defaultPosts;
 
   return (
-    <div className="container">
+    <>
+      <div className="leaves-container">
+        <span className="leaf">🍂</span>
+        <span className="leaf">🍁</span>
+        <span className="leaf">🍂</span>
+        <span className="leaf">🍃</span>
+        <span className="leaf">🍂</span>
+        <span className="leaf">🍁</span>
+        <span className="leaf">🍃</span>
+        <span className="leaf">🍂</span>
+        <span className="leaf">🍁</span>
+        <span className="leaf">🍃</span>
+      </div>
+      <div className="container">
       <header>
-        <h1>Gilbert Garcia</h1>
+        <h1>Gilber Garcia</h1>
         <p className="subtitle">Engineering elegant solutions to complex problems</p>
+        <div style={{marginTop: '1rem'}}>
+          <a href="/admin" style={{color: '#6b7280', textDecoration: 'none', fontSize: '0.9rem', padding: '0.5rem 1rem', background: 'rgba(107, 114, 128, 0.1)', borderRadius: '8px', display: 'inline-block', border: '1px solid rgba(107, 114, 128, 0.2)'}}>
+            🔐 Admin
+          </a>
+        </div>
       </header>
       
       <main>
@@ -67,7 +85,10 @@ export default function HomePage() {
 
       <footer>
         <div className="footer-content">
-          <p>© 2024 Gilbert Garcia · Crafted with passion</p>
+          <p>© 2024 Gilber Garcia · Crafted with passion</p>
+          <p style={{fontSize: '0.85rem', opacity: 0.7, marginTop: '0.5rem'}}>
+            Write posts in <a href="/admin" style={{color: 'inherit', textDecoration: 'underline'}}>admin panel</a>
+          </p>
         </div>
         <div className="social-links">
           <a href="#" title="GitHub">GH</a>
@@ -77,5 +98,6 @@ export default function HomePage() {
         </div>
       </footer>
     </div>
+    </>
   );
 }
