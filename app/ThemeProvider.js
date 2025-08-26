@@ -4,18 +4,17 @@ import { createContext, useContext, useEffect, useState } from 'react';
 const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true); // Default to dark mode
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
     
-    // Check localStorage first, then system preference
+    // Check localStorage first, default to dark
     const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     
-    // User's manual choice takes priority over system preference
-    const shouldBeDark = savedTheme !== null ? savedTheme === 'dark' : prefersDark;
+    // User's manual choice takes priority, default to dark if no saved preference
+    const shouldBeDark = savedTheme !== null ? savedTheme === 'dark' : true;
     
     setIsDarkMode(shouldBeDark);
     if (shouldBeDark) {
