@@ -296,12 +296,12 @@ export default function SimpleMinimal() {
                 </p>
                 
                 <div className="card-footer">
-                  <a href={`/article/${post.id}`} className="read-link">
+                  <button onClick={() => alert('Article view coming soon!')} className="read-link">
                     <span>Read Article</span>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                       <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
-                  </a>
+                  </button>
                   {isAuthenticated && (
                     <button onClick={() => deletePost(post.id)} className="delete-btn" aria-label="Delete post">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none">

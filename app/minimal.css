@@ -559,6 +559,9 @@ body {
   font-size: 0.95rem;
   transition: all 0.2s ease;
   margin-top: auto;
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .read-link:hover {
