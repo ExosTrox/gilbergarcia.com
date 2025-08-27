@@ -1,9 +1,0 @@
-{
-  "id": 1,
-  "title": "Welcome to My Blog",
-  "slug": "welcome-to-my-blog",
-  "excerpt": "This is the beginning of something new. A place to share thoughts on code, design, and technology.",
-  "date": "2024-11-26",
-  "tags": ["Introduction", "Blog"],
-  "content": "Welcome to my personal blog where I'll be sharing insights about software development, design patterns, and the latest in web technology."
-}
