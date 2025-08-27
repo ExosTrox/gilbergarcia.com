@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gilber Garcia - Software Engineer</title>
+    <title>Gilber Garcia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
-
         * {
             margin: 0;
             padding: 0;
@@ -14,267 +15,556 @@
         }
 
         :root {
-            --bg: #0a0a0a;
-            --card-bg: #141414;
-            --text: #ffffff;
-            --text-muted: #888888;
-            --accent: #ff6b35;
-            --border: rgba(255, 255, 255, 0.08);
+            --text-primary: #2d2d2d;
+            --text-secondary: #6b6b6b;
+            --text-light: #999;
+            --bg-primary: #ffffff;
+            --bg-secondary: #fafafa;
+            --accent: #c9a8e8;
+            --accent-hover: #b392d8;
+            --border: #e5e5e5;
+            --max-width: 900px;
         }
 
         body {
             font-family: 'Inter', -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .container {
-            max-width: 1100px;
+            max-width: var(--max-width);
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 20px;
         }
 
-        /* Navigation */
+        /* Header */
+        header {
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 2rem 0;
         }
 
         .logo {
-            display: flex;
-            align-items: baseline;
-            gap: 0.5rem;
+            font-family: 'EB Garamond', serif;
+            font-size: 28px;
+            font-weight: 500;
             text-decoration: none;
-            color: var(--text);
-        }
-
-        .logo-text {
-            font-size: 1.25rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+            position: relative;
         }
 
         .logo-dot {
+            display: inline-block;
             width: 8px;
             height: 8px;
             background: var(--accent);
             border-radius: 50%;
+            margin-left: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .logo-dot::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0;
+            animation: pulse-ring 2s ease-out infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(3);
+                opacity: 0;
+            }
+        }
+
+        .logo-dot:hover {
+            transform: scale(1.5) rotate(180deg);
+            border-radius: 30%;
+            box-shadow: 0 0 10px var(--accent);
+            cursor: pointer;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 35px;
             align-items: center;
         }
 
         .nav-link {
-            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-secondary);
             text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: color 0.2s ease;
+            transition: color 0.3s ease;
         }
 
         .nav-link:hover {
-            color: var(--text);
+            color: var(--text-primary);
         }
 
-        /* Hero */
-        .hero {
-            padding: 6rem 0 4rem;
-            text-align: center;
-        }
-
-        .hero-title {
-            font-family: 'Libre Baskerville', serif;
-            font-size: clamp(2.5rem, 7vw, 4.5rem);
-            font-weight: 700;
-            line-height: 1.2;
-            letter-spacing: -0.02em;
-            margin-bottom: 1.5rem;
-        }
-
-        .gradient {
-            background: linear-gradient(90deg, var(--accent) 0%, #f7931e 50%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-subtitle {
-            font-size: 1.125rem;
-            color: var(--text-muted);
-            font-weight: 400;
-            letter-spacing: 0.02em;
-        }
-
-        /* Blog Section */
-        .blog {
-            padding: 4rem 0;
-        }
-
-        .section-title {
-            font-family: 'Libre Baskerville', serif;
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 3rem;
-        }
-
-        .posts-container {
-            display: grid;
-            gap: 1.5rem;
-        }
-
-        .post-card {
-            display: flex;
-            gap: 2rem;
-            padding: 2rem;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .post-card:hover {
-            transform: translateX(8px);
-            border-color: var(--accent);
-        }
-
-        .card-date {
-            width: 80px;
-            text-align: center;
-            flex-shrink: 0;
-        }
-
-        .date-day {
-            font-family: 'Libre Baskerville', serif;
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--accent);
-            display: block;
-        }
-
-        .date-month {
-            font-size: 0.875rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-
-        .card-content {
-            flex: 1;
-        }
-
-        .card-title {
-            font-family: 'Libre Baskerville', serif;
-            font-size: 1.75rem;
-            font-weight: 700;
-            line-height: 1.3;
-            letter-spacing: -0.02em;
-            color: var(--text);
-            margin-bottom: 0.5rem;
-        }
-
-        .card-description {
-            font-size: 1rem;
-            line-height: 1.6;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-        }
-
-        .read-link {
-            color: var(--accent);
-            text-decoration: none;
+        #adminBtn {
+            display: none;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 13px;
             font-weight: 500;
-            font-size: 0.95rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: background 0.3s ease;
         }
 
-        /* About Section */
-        .about {
-            padding: 4rem 0;
-            border-top: 1px solid var(--border);
+        #adminBtn:hover {
+            background: var(--accent-hover);
         }
 
-        .about-text {
-            font-size: 1.125rem;
-            line-height: 1.7;
-            color: var(--text-muted);
-            margin: 1.5rem 0 2rem;
-            max-width: 700px;
-        }
-
-        .skills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .skill {
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            transition: all 0.2s ease;
-        }
-
-        .skill:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        /* Contact Section */
-        .contact {
-            padding: 4rem 0;
-            border-top: 1px solid var(--border);
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 100px;
             text-align: center;
-        }
-
-        .email-link {
-            font-size: 1.5rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            color: var(--text);
-            text-decoration: none;
-            display: inline-block;
-            margin: 2rem 0;
             position: relative;
         }
 
-        .email-link::after {
+        .hero-visual {
+            width: 320px;
+            height: 320px;
+            margin: 0 auto 60px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .orbit-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .central-shape {
+            width: 120px;
+            height: 120px;
+            background: var(--accent);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            animation: morphing 8s ease-in-out infinite;
+            box-shadow: 0 20px 60px rgba(201, 168, 232, 0.3);
+        }
+
+        @keyframes morphing {
+            0%, 100% {
+                border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            }
+            25% {
+                border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%;
+            }
+            50% {
+                border-radius: 30% 70% 30% 70% / 70% 30% 70% 30%;
+            }
+            75% {
+                border-radius: 70% 30% 70% 30% / 30% 70% 30% 70%;
+            }
+        }
+
+        .orbit {
+            position: absolute;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .orbit-1 {
+            width: 200px;
+            height: 200px;
+            animation: rotate 20s linear infinite;
+        }
+
+        .orbit-2 {
+            width: 280px;
+            height: 280px;
+            animation: rotate 30s linear infinite reverse;
+        }
+
+        @keyframes rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .orbit-dot {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: var(--text-primary);
+            border-radius: 50%;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .orbit-2 .orbit-dot {
+            width: 8px;
+            height: 8px;
+            top: auto;
+            bottom: -4px;
+            background: var(--accent);
+        }
+
+        .hero-greeting {
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 400;
+            line-height: 1;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-greeting::after {
+            content: '!';
+            position: absolute;
+            right: -0.3em;
+            color: var(--accent);
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero-intro {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 300;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .hero-intro span {
+            display: inline-block;
+            animation: slideUp 0.6s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .hero-intro span:nth-child(1) { animation-delay: 0.1s; }
+        .hero-intro span:nth-child(2) { animation-delay: 0.2s; }
+        .hero-intro span:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-tagline {
+            font-size: clamp(1.25rem, 3.5vw, 1.75rem);
+            font-weight: 300;
+            color: var(--text-primary);
+            line-height: 1.4;
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        .hero-tagline::after {
             content: '';
             position: absolute;
-            bottom: -4px;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .typewriter {
+            color: var(--accent);
+            font-weight: 500;
+            position: relative;
+            display: inline-block;
+        }
+
+        .typewriter::after {
+            content: '|';
+            position: absolute;
+            right: -0.1em;
+            color: var(--accent);
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Social Links */
+        .social-section {
+            padding: 60px 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            text-decoration: none;
+            border: 1.5px solid var(--accent);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .social-link svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .visitor-count {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-top: 30px;
+        }
+
+        /* Blog Section */
+        .blog-section {
+            padding: 80px 0;
+            background: var(--bg-secondary);
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-light);
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .blog-posts {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .blog-post {
+            display: flex;
+            gap: 40px;
+            padding: 35px 0;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .blog-post::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 0;
+            background: var(--accent);
+            transition: height 0.3s ease;
+        }
+
+        .blog-post:hover::before {
+            height: 60%;
+        }
+
+        .blog-post:hover {
+            padding-left: 10px;
+        }
+
+        .blog-post:last-child {
+            border-bottom: none;
+        }
+
+        .post-date {
+            font-family: 'EB Garamond', serif;
+            font-size: 42px;
+            font-weight: 500;
+            line-height: 1;
+            min-width: 60px;
+            position: relative;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+
+        .blog-post:hover .post-date {
+            color: var(--accent);
+        }
+
+        .post-date::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
             left: 0;
             width: 100%;
-            height: 2px;
+            height: 1px;
             background: var(--accent);
             transform: scaleX(0);
-            transform-origin: right;
+            transform-origin: left;
             transition: transform 0.3s ease;
         }
 
-        .email-link:hover::after {
+        .blog-post:hover .post-date::after {
             transform: scaleX(1);
-            transform-origin: left;
         }
 
-        .email-link:hover {
+        .post-content {
+            flex: 1;
+        }
+
+        .post-title {
+            font-size: 22px;
+            font-weight: 400;
+            color: var(--text-primary);
+            line-height: 1.4;
+            margin-bottom: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .blog-post:hover .post-title {
             color: var(--accent);
+        }
+
+        .post-excerpt {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .post-thumbnail {
+            width: 80px;
+            height: 80px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .post-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .about-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .about-title {
+            font-family: 'EB Garamond', serif;
+            font-size: 42px;
+            font-weight: 400;
+            margin-bottom: 30px;
+            letter-spacing: -1px;
+        }
+
+        .about-text {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
         }
 
         /* Footer */
         footer {
-            padding: 2rem 0;
-            border-top: 1px solid var(--border);
+            padding: 60px 0;
             text-align: center;
-            color: var(--text-muted);
-            font-size: 0.875rem;
+            border-top: 1px solid var(--border);
         }
 
-        /* Article Modal */
+        .footer-logo {
+            font-family: 'EB Garamond', serif;
+            font-size: 32px;
+            font-weight: 400;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .footer-tagline {
+            font-size: 13px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Modals */
         .modal {
             display: none;
             position: fixed;
@@ -282,9 +572,9 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(255, 255, 255, 0.98);
             z-index: 1000;
-            padding: 2rem;
+            padding: 40px;
             overflow-y: auto;
         }
 
@@ -295,243 +585,1003 @@
         }
 
         .modal-content {
-            background: var(--bg);
-            border-radius: 16px;
-            max-width: 900px;
+            background: white;
+            max-width: 800px;
             width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 3rem;
+            padding: 60px;
             position: relative;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
         }
 
-        .close-btn {
+        .modal-close {
             position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            top: 30px;
+            right: 30px;
+            width: 32px;
+            height: 32px;
+            background: transparent;
+            border: none;
             cursor: pointer;
-            color: var(--text-muted);
-            font-size: 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 24px;
+            color: var(--text-light);
+            transition: color 0.3s ease;
         }
 
-        .close-btn:hover {
-            background: var(--accent);
-            color: white;
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .article-date {
+            font-family: 'EB Garamond', serif;
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
         }
 
         .article-title {
-            font-family: 'Libre Baskerville', serif;
-            font-size: 2.5rem;
-            font-weight: 700;
+            font-family: 'EB Garamond', serif;
+            font-size: 48px;
+            font-weight: 400;
             line-height: 1.2;
-            margin-bottom: 1rem;
+            margin-bottom: 40px;
+            letter-spacing: -1px;
         }
 
         .article-content {
-            font-size: 1.125rem;
+            font-size: 18px;
             line-height: 1.8;
-            color: var(--text);
+            color: var(--text-primary);
         }
 
         .article-content p {
-            margin-bottom: 1.5rem;
+            margin-bottom: 24px;
         }
 
-        /* Mobile */
+        .article-content h2 {
+            font-family: 'EB Garamond', serif;
+            font-size: 32px;
+            margin: 40px 0 20px;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 10px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .article-tags {
+            display: flex;
+            gap: 8px;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+
+        .article-tags .tag {
+            padding: 6px 14px;
+            background: var(--accent);
+            color: white;
+            border-radius: 20px;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .article-tags .tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(201, 168, 232, 0.3);
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 16px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: white;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .form-textarea {
+            min-height: 200px;
+            resize: vertical;
+            font-family: inherit;
+            line-height: 1.6;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            padding: 12px 30px;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        /* Admin Panel Styles */
+        .admin-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab-btn.active {
+            color: var(--accent);
+        }
+
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .tab-btn.active::after {
+            transform: scaleX(1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .editor-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .editor-panel {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .preview-panel {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .editor-toolbar {
+            display: flex;
+            gap: 5px;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .editor-toolbar button {
+            padding: 5px 10px;
+            background: transparent;
+            border: 1px solid transparent;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            font-size: 14px;
+        }
+
+        .editor-toolbar button:hover {
+            background: var(--bg-secondary);
+            border-color: var(--border);
+        }
+
+        .toolbar-separator {
+            width: 1px;
+            background: var(--border);
+            margin: 0 5px;
+        }
+
+        .rich-editor {
+            min-height: 300px;
+            padding: 15px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 16px;
+            line-height: 1.6;
+            outline: none;
+        }
+
+        .rich-editor:focus {
+            border-color: var(--accent);
+        }
+
+        .rich-editor[contenteditable=true]:empty:before {
+            content: attr(placeholder);
+            color: var(--text-light);
+            pointer-events: none;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .preview-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        .preview-content {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            min-height: 400px;
+        }
+
+        .preview-post {
+            font-family: inherit;
+        }
+
+        .preview-date {
+            font-family: 'EB Garamond', serif;
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .preview-title {
+            font-family: 'EB Garamond', serif;
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .preview-meta {
+            display: flex;
+            gap: 10px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .preview-body {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--text-primary);
+        }
+
+        .preview-tags {
+            display: flex;
+            gap: 8px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 4px 12px;
+            background: var(--accent);
+            color: white;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .auto-save-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .save-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .save-dot.saving {
+            background: #f59e0b;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .editor-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+
+        /* Posts Manager */
+        .posts-manager {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .manager-header {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .manager-header input {
+            flex: 1;
+        }
+
+        .posts-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .manage-post-card {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .manage-post-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-info {
+            flex: 1;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .post-actions button {
+            padding: 6px 12px;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s ease;
+        }
+
+        .post-actions button:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        /* Settings Panel */
+        .settings-panel {
+            max-width: 600px;
+        }
+
+        /* Analytics Panel */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .post-card {
+            .editor-container {
+                grid-template-columns: 1fr;
+            }
+            .hero-greeting {
+                font-size: 48px;
+            }
+
+            .hero-intro,
+            .hero-tagline {
+                font-size: 24px;
+            }
+
+            .blog-post {
                 flex-direction: column;
-                gap: 1rem;
-            }
-
-            .card-date {
-                display: flex;
-                gap: 1rem;
-                align-items: baseline;
-            }
-
-            .hero-title {
-                font-size: 2rem;
+                gap: 20px;
             }
 
             .nav-links {
-                gap: 1rem;
+                gap: 20px;
+            }
+
+            .modal-content {
+                padding: 40px 20px;
+            }
+
+            .article-title {
+                font-size: 36px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <nav>
-            <a href="#" class="logo">
-                <span class="logo-text">Gilber Garcia</span>
-                <span class="logo-dot"></span>
-            </a>
-            <div class="nav-links">
-                <a href="#blog" class="nav-link">Blog</a>
-                <a href="#about" class="nav-link">About</a>
-                <a href="#contact" class="nav-link">Contact</a>
-            </div>
-        </nav>
-
-        <header class="hero">
-            <h1 class="hero-title">
-                <div>Creating</div>
-                <div class="gradient">Digital Excellence</div>
-            </h1>
-            <p class="hero-subtitle">Software Engineer & Creative Developer</p>
+        <!-- Header -->
+        <header>
+            <nav>
+                <a href="/" class="logo">
+                    Gilber Garcia<span class="logo-dot" id="secretTrigger"></span>
+                </a>
+                <div class="nav-links">
+                    <a href="#home" class="nav-link">Home</a>
+                    <a href="#posts" class="nav-link">Posts</a>
+                    <a href="#about" class="nav-link">About Me</a>
+                    <a href="/admin.html" class="nav-link" id="adminLink" style="display:none;">Admin</a>
+                </div>
+            </nav>
         </header>
 
-        <main id="blog" class="blog">
-            <h2 class="section-title">Recent Articles</h2>
-            <div class="posts-container" id="posts">
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="hero-visual">
+                <div class="orbit-container">
+                    <div class="central-shape"></div>
+                    <div class="orbit orbit-1">
+                        <span class="orbit-dot"></span>
+                    </div>
+                    <div class="orbit orbit-2">
+                        <span class="orbit-dot"></span>
+                    </div>
+                </div>
+            </div>
+            <h1 class="hero-greeting">Hey</h1>
+            <p class="hero-intro">
+                <span>I'm</span>
+                <span>Gilber</span>
+                <span>Garcia</span>
+            </p>
+            <p class="hero-tagline">I <span class="typewriter" data-words='["craft", "build", "design", "create"]'>craft</span> digital experiences with code</p>
+        </section>
+
+        <!-- Social Links -->
+        <section class="social-section">
+            <div class="social-links">
+                <a href="https://github.com" class="social-link" target="_blank">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                </a>
+                <a href="https://linkedin.com" class="social-link" target="_blank">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                </a>
+                <a href="https://twitter.com" class="social-link" target="_blank">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                    </svg>
+                </a>
+                <a href="mailto:gilbergarciata@gmail.com" class="social-link">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/>
+                    </svg>
+                </a>
+            </div>
+            <p class="visitor-count" id="visitorCount">(Visited 0 times, 0 visits today)</p>
+        </section>
+
+        <!-- Blog Section -->
+        <section class="blog-section" id="posts">
+            <h2 class="section-title">Latest from the blog</h2>
+            <div class="blog-posts" id="blogPosts">
                 <!-- Posts will be loaded here -->
             </div>
-        </main>
+        </section>
 
-        <section id="about" class="about">
-            <h2 class="section-title">About</h2>
-            <p class="about-text">
-                I'm a software engineer passionate about creating exceptional digital experiences 
-                that combine beautiful design with powerful functionality.
-            </p>
-            <div class="skills">
-                <span class="skill">React / Next.js</span>
-                <span class="skill">TypeScript</span>
-                <span class="skill">Node.js</span>
-                <span class="skill">Python</span>
+        <!-- About Section -->
+        <section class="about-section" id="about">
+            <div class="about-content">
+                <h2 class="about-title">About Me</h2>
+                <p class="about-text">
+                    <!-- Content coming soon -->
+                </p>
             </div>
         </section>
 
-        <section id="contact" class="contact">
-            <h2 class="section-title">Let's Connect</h2>
-            <p style="color: var(--text-muted); margin-bottom: 1rem;">Have a project in mind? Let's create something amazing together.</p>
-            <a href="mailto:gilbergarciata@gmail.com" class="email-link">gilbergarciata@gmail.com</a>
-        </section>
-
+        <!-- Footer -->
         <footer>
-            <p>© 2024 Gilber Garcia · Crafted with care</p>
+            <div class="footer-logo">Gilber Garcia</div>
+            <p class="footer-tagline">Software Engineer & Creator</p>
         </footer>
     </div>
 
+    
     <!-- Article Modal -->
     <div id="articleModal" class="modal">
         <div class="modal-content">
-            <button class="close-btn" onclick="closeArticle()">&times;</button>
-            <article id="articleContent"></article>
+            <button class="modal-close" onclick="closeArticle()">×</button>
+            <div id="articleContent"></div>
         </div>
     </div>
 
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content" style="max-width: 1200px;">
+            <button class="modal-close" onclick="closeLogin()">×</button>
+            <h2 style="font-family: 'EB Garamond', serif; font-size: 36px; margin-bottom: 30px;">Admin Login</h2>
+            <div class="form-group">
+                <input type="password" id="adminPassword" class="form-input" placeholder="Enter admin password" onkeypress="if(event.key==='Enter') checkPassword()">
+            </div>
+            <button onclick="checkPassword()" class="btn-primary">Login</button>
+        </div>
+    </div>
+    
+    <!-- Import Modal -->
+    <input type="file" id="importFile" accept=".json" style="display: none;" onchange="handleImport(event)">
+
     <script>
-        // Sample posts data
-        const posts = [
+        // Default posts
+        const defaultPosts = [
             {
-                day: '26',
-                month: 'NOV',
-                title: 'Building Better Software Through Clean Architecture',
-                description: 'Exploring principles and patterns that make software scalable and maintainable.',
-                content: 'Clean architecture is not just about organizing code; it\'s about creating systems that can evolve with changing requirements. When we build software with clean architecture principles, we create boundaries between different parts of our system, making each component independent and testable.\n\nThe key principles include:\n\n1. Independence of frameworks - The architecture doesn\'t depend on the existence of some library of feature-laden software.\n\n2. Testability - The business rules can be tested without the UI, database, web server, or any other external element.\n\n3. Independence of UI - The UI can change easily, without changing the rest of the system.\n\n4. Independence of Database - You can swap out Oracle or SQL Server for MongoDB, BigTable, CouchDB, or something else.\n\n5. Independence of any external agency - The business rules don\'t know anything about the outside world.\n\nBy following these principles, we create software that is not only maintainable but also adaptable to future changes.'
+                id: 1,
+                date: '16',
+                title: '¿Cuál fue el primer lenguaje documentado?',
+                content: `El primer lenguaje de programación documentado fue Plankalkül, desarrollado por Konrad Zuse entre 1942 y 1945.
+
+Aunque nunca fue implementado durante su época, Plankalkül (que significa "cálculo de planes" en alemán) fue revolucionario para su tiempo. Zuse diseñó este lenguaje mientras estaba aislado de otros desarrollos en computación debido a la Segunda Guerra Mundial.
+
+El lenguaje incluía características sorprendentemente modernas como:
+- Estructuras de datos
+- Operaciones con arrays
+- Subrutinas
+- Manejo de condiciones
+
+Sin embargo, el primer lenguaje de programación ampliamente implementado fue FORTRAN (Formula Translation), creado por IBM en 1957. FORTRAN revolucionó la programación al permitir que los científicos e ingenieros escribieran programas en una notación más cercana al lenguaje matemático.
+
+Esta evolución desde Plankalkül hasta los lenguajes modernos muestra cómo la programación ha pasado de ser una actividad puramente mecánica a una forma de expresión creativa y resolución de problemas.`
             },
             {
-                day: '19',
-                month: 'NOV',
-                title: 'The Art of Writing Maintainable Code',
-                description: 'How to write code that your future self will thank you for.',
-                content: 'Writing maintainable code is an art that every developer should master. It\'s not just about making code work; it\'s about making it understandable, modifiable, and reliable for years to come.\n\nKey practices include:\n\n• Clear naming conventions that express intent\n• Functions that do one thing well\n• Consistent code formatting\n• Comprehensive but concise documentation\n• Proper error handling\n• Regular refactoring\n\nRemember: code is read far more often than it is written. Optimize for readability.'
+                id: 2,
+                date: '19',
+                title: 'Libera espacio mental y simplifica tu vida usando el método Bullet Journal',
+                content: `El método Bullet Journal, creado por Ryder Carroll, es más que un sistema de organización: es una filosofía de vida minimalista.
+
+En esencia, el Bullet Journal es un sistema analógico de productividad que te ayuda a:
+
+1. **Capturar** - Escribe todo lo que necesitas recordar
+2. **Organizar** - Dale estructura a tus pensamientos
+3. **Examinar** - Reflexiona sobre lo que realmente importa
+
+El sistema utiliza símbolos simples:
+• Tareas
+○ Eventos
+- Notas
+× Tarea completada
+> Tarea migrada
+
+Lo revolucionario del método no es su complejidad, sino su simplicidad. En un mundo digital sobrecargado, volver al papel nos obliga a ser más intencionales con nuestro tiempo y energía.
+
+El verdadero poder del Bullet Journal está en la reflexión diaria. Al migrar tareas no completadas, te preguntas: "¿Esto sigue siendo importante?" Si no lo es, lo eliminas. Esta práctica constante de cuestionamiento te ayuda a enfocarte en lo esencial.
+
+Como desarrolladores, estamos acostumbrados a sistemas complejos. El Bullet Journal nos recuerda que las mejores soluciones son a menudo las más simples.`
             },
             {
-                day: '10',
-                month: 'NOV',
-                title: 'Understanding Modern Development Workflows',
-                description: 'From CI/CD to automated testing - building efficient pipelines.',
-                content: 'Modern development workflows have transformed how we build and deploy software. Continuous Integration and Continuous Deployment (CI/CD) are no longer optional; they\'re essential for maintaining quality and velocity.\n\nA robust workflow includes:\n\n• Automated testing at multiple levels\n• Code review processes\n• Automated deployment pipelines\n• Monitoring and alerting systems\n• Rollback capabilities\n\nThese practices ensure that code changes are validated, reviewed, and deployed safely and efficiently.'
+                id: 3,
+                date: '16',
+                title: 'Cómo implementar el trabajo profundo en nuestras vidas para mejorar la productividad',
+                content: `Cal Newport define el trabajo profundo como "actividades profesionales realizadas en un estado de concentración sin distracciones que llevan tus capacidades cognitivas al límite".
+
+En nuestra industria, el trabajo profundo no es un lujo, es una necesidad. Resolver problemas complejos, diseñar arquitecturas o aprender nuevas tecnologías requiere períodos largos de concentración ininterrumpida.
+
+**Estrategias para implementar trabajo profundo:**
+
+1. **Filosofía Monástica**: Elimina o minimiza radicalmente las obligaciones superficiales. Ideal para quienes pueden dedicar largos períodos.
+
+2. **Filosofía Bimodal**: Divide tu tiempo claramente entre profundo y superficial. Por ejemplo, mañanas para trabajo profundo, tardes para reuniones.
+
+3. **Filosofía Rítmica**: Crea una cadena de hábitos. Marca en un calendario cada día que logres tu sesión de trabajo profundo.
+
+4. **Filosofía Periodística**: Aprovecha cualquier momento libre para trabajo profundo. Requiere práctica pero es muy flexible.
+
+**Rituales que funcionan:**
+
+- Define un espacio específico para trabajo profundo
+- Establece reglas claras (sin teléfono, sin internet no esencial)
+- Prepara todo lo necesario antes de empezar
+- Define métricas de éxito para cada sesión
+
+El trabajo profundo no es solo sobre productividad. Es sobre crear trabajo significativo que te diferencie en un mundo lleno de distracciones. En una economía que valora cada vez más el conocimiento, tu capacidad de concentración profunda es tu ventaja competitiva.`
+            },
+            {
+                id: 4,
+                date: '23',
+                title: '¿Estás creando un emprendimiento que deja huella?',
+                thumbnail: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="80" height="80"%3E%3Crect width="80" height="80" fill="%23c9a8e8"/%3E%3C/svg%3E',
+                content: `Un emprendimiento que deja huella no es simplemente uno que genera ganancias. Es uno que resuelve un problema real, crea valor genuino y mejora la vida de las personas.
+
+**Características de emprendimientos memorables:**
+
+**1. Propósito claro**
+No se trata solo de qué haces, sino de por qué lo haces. Los emprendimientos que perduran tienen una misión que trasciende las ganancias.
+
+**2. Obsesión por el usuario**
+Las mejores empresas no solo escuchan a sus usuarios, co-crean con ellos. Cada decisión se toma pensando en cómo impactará la experiencia del cliente.
+
+**3. Innovación constante**
+No es necesario reinventar la rueda, pero sí mejorarla continuamente. La innovación puede estar en el producto, el modelo de negocio o la forma de entregar valor.
+
+**4. Cultura sólida**
+Los valores no son pósters en la pared, son decisiones diarias. Una cultura fuerte atrae talento alineado y crea resiliencia organizacional.
+
+**5. Impacto medible**
+Define métricas que vayan más allá de los ingresos. ¿Cuántos problemas resuelves? ¿Cuánto tiempo ahorras? ¿Qué impacto social generas?
+
+**Preguntas para reflexionar:**
+
+- Si tu emprendimiento desapareciera mañana, ¿quién lo extrañaría y por qué?
+- ¿Estás construyendo algo que quieres que exista en el mundo?
+- ¿Tu trabajo hace que el futuro sea mejor que el presente?
+
+Crear un emprendimiento que deje huella requiere valentía para ir más allá de lo convencional y paciencia para construir algo duradero. No es el camino más fácil, pero es el más gratificante.`
             }
         ];
 
-        // Load posts from localStorage or use defaults
+        // Load and display posts
         function loadPosts() {
-            const savedPosts = localStorage.getItem('blogPosts');
-            const postsToDisplay = savedPosts ? JSON.parse(savedPosts) : posts;
+            // Get posts from localStorage (where admin.html saves them)
+            const saved = localStorage.getItem('blogPosts');
+            let posts = saved ? JSON.parse(saved) : [];
             
-            const container = document.getElementById('posts');
-            container.innerHTML = '';
+            // If no posts, show defaults
+            if (posts.length === 0) {
+                posts = defaultPosts;
+            }
             
-            postsToDisplay.forEach((post, index) => {
-                const postCard = document.createElement('div');
-                postCard.className = 'post-card';
-                postCard.onclick = () => showArticle(post);
-                
-                // Handle both old format (with date) and new format (with day/month)
-                let dateHtml = '';
-                if (post.date) {
-                    const date = new Date(post.date);
-                    dateHtml = `
-                        <div class="card-date">
-                            <span class="date-day">${date.getDate()}</span>
-                            <span class="date-month">${date.toLocaleDateString('en-US', { month: 'short' }).toUpperCase()}</span>
-                        </div>
-                    `;
-                } else {
-                    dateHtml = `
-                        <div class="card-date">
-                            <span class="date-day">${post.day}</span>
-                            <span class="date-month">${post.month}</span>
-                        </div>
-                    `;
+            const container = document.getElementById('blogPosts');
+            if (!container) return;
+            
+            // Display all posts
+            container.innerHTML = posts.map((post, index) => {
+                // Get the proper date display
+                let displayDate = post.date || '1';
+                if (post.dateISO) {
+                    const date = new Date(post.dateISO);
+                    displayDate = date.getDate();
                 }
                 
-                postCard.innerHTML = `
-                    ${dateHtml}
-                    <div class="card-content">
-                        <h3 class="card-title">${post.title}</h3>
-                        <p class="card-description">${post.description || (post.content ? post.content.substring(0, 150) + '...' : '')}</p>
-                        <a href="#" class="read-link" onclick="event.preventDefault()">Read Article →</a>
-                    </div>
+                return `
+                    <article class="blog-post" onclick="viewArticle(${index})">
+                        <div class="post-date">${displayDate}</div>
+                        <div class="post-content">
+                            <h3 class="post-title">${post.title}</h3>
+                            ${post.excerpt ? 
+                                `<p class="post-excerpt">${post.excerpt}</p>` : 
+                                (post.content ? `<p class="post-excerpt">${post.content.substring(0, 150)}...</p>` : '')}
+                        </div>
+                    </article>
                 `;
-                
-                container.appendChild(postCard);
-            });
+            }).join('');
         }
 
-        // Show article in modal
-        function showArticle(post) {
-            const modal = document.getElementById('articleModal');
-            const content = document.getElementById('articleContent');
+        // View article
+        function viewArticle(index) {
+            const saved = localStorage.getItem('blogPosts');
+            const posts = saved ? JSON.parse(saved) : defaultPosts;
+            const post = posts[index];
             
-            content.innerHTML = `
+            if (!post) return;
+            
+            // Format date properly
+            const postDate = post.dateISO ? new Date(post.dateISO) : new Date();
+            const formattedDate = postDate.toLocaleDateString('en-US', { 
+                month: 'long', 
+                day: 'numeric', 
+                year: 'numeric' 
+            });
+            
+            // Update URL without page reload
+            const newUrl = `#post/${post.slug || post.id}`;
+            window.history.pushState({ postId: post.id }, '', newUrl);
+            
+            document.getElementById('articleContent').innerHTML = `
+                <div class="article-date">${formattedDate}</div>
                 <h1 class="article-title">${post.title}</h1>
-                <div class="article-content">
-                    ${post.content.split('\n').map(p => p.trim() ? `<p>${p}</p>` : '').join('')}
+                <div class="article-meta">
+                    <span>${post.category || 'General'}</span>
+                    <span>•</span>
+                    <span>${post.readTime || '5 min read'}</span>
+                    <span>•</span>
+                    <span>By ${post.author || 'Gilber Garcia'}</span>
                 </div>
+                <div class="article-content">
+                    ${post.content}
+                </div>
+                ${post.tags && post.tags.length > 0 ? `
+                    <div class="article-tags">
+                        ${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                ` : ''}
             `;
             
-            modal.classList.add('active');
+            document.getElementById('articleModal').classList.add('active');
         }
 
-        // Close article modal
+        // Close article
         function closeArticle() {
             document.getElementById('articleModal').classList.remove('active');
+            // Reset URL to home
+            window.history.pushState({}, '', '#');
         }
 
-        // Close modal on ESC or outside click
+        // Visitor counter
+        let visits = parseInt(localStorage.getItem('totalVisits') || '0');
+        let todayVisits = parseInt(sessionStorage.getItem('todayVisits') || '0');
+        
+        if (!sessionStorage.getItem('counted')) {
+            visits++;
+            todayVisits++;
+            localStorage.setItem('totalVisits', visits);
+            sessionStorage.setItem('todayVisits', todayVisits);
+            sessionStorage.setItem('counted', 'true');
+        }
+        
+        document.getElementById('visitorCount').textContent = `(Visited ${visits} times, ${todayVisits} visits today)`;
+
+        // Admin functionality
+        const ADMIN_PASS = 'kga2801';
+        let clickCount = 0;
+        let clickTimer;
+
+        // Check if admin
+        if (sessionStorage.getItem('isAdmin') === 'true') {
+            document.getElementById('adminLink').style.display = 'inline-block';
+        }
+
+        // Secret trigger
+        document.getElementById('secretTrigger').addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            clickCount++;
+            
+            clearTimeout(clickTimer);
+            clickTimer = setTimeout(() => { clickCount = 0; }, 1000);
+            
+            if (clickCount === 3) {
+                document.getElementById('loginModal').classList.add('active');
+                clickCount = 0;
+            }
+        });
+
+
+        // Check password
+        function checkPassword() {
+            const password = document.getElementById('adminPassword').value;
+            if (password === ADMIN_PASS) {
+                sessionStorage.setItem('isAdmin', 'true');
+                document.getElementById('adminLink').style.display = 'inline-block';
+                closeLogin();
+                // Redirect to admin page
+                setTimeout(() => {
+                    window.location.href = '/admin.html';
+                }, 300);
+            } else {
+                alert('Invalid password');
+                document.getElementById('adminPassword').value = '';
+                document.getElementById('adminPassword').focus();
+            }
+        }
+
+        // Close login
+        function closeLogin() {
+            document.getElementById('loginModal').classList.remove('active');
+            document.getElementById('adminPassword').value = '';
+        }
+
+        
+
+
+        // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeArticle();
+            if (e.key === 'Escape') {
+                closeArticle();
+                closeLogin();
+            }
         });
 
-        document.getElementById('articleModal').addEventListener('click', (e) => {
-            if (e.target.id === 'articleModal') closeArticle();
+        // Enter to submit password
+        document.getElementById('adminPassword').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkPassword();
         });
 
-        // Load posts on page load
+        // Initialize
         loadPosts();
+        
+        // Handle URL routing
+        function handleRoute() {
+            const path = window.location.pathname;
+            
+            // Handle /admin route
+            if (path === '/admin') {
+                // Check if user is authenticated
+                if (sessionStorage.getItem('isAdmin') === 'true') {
+                    // Show admin panel as a modal
+                    document.getElementById('writeModal').classList.add('active');
+                } else {
+                    // Redirect to home if not authenticated
+                    window.location.pathname = '/';
+                }
+                return;
+            }
+            
+            // Handle hash routing for posts
+            const hash = window.location.hash;
+            if (hash.startsWith('#post/')) {
+                const postSlug = hash.substring(6);
+                const saved = localStorage.getItem('blogPosts');
+                const posts = saved ? JSON.parse(saved) : defaultPosts;
+                
+                // Find post by slug or ID
+                const postIndex = posts.findIndex(p => 
+                    p.slug === postSlug || p.id == postSlug
+                );
+                
+                if (postIndex !== -1) {
+                    viewArticle(postIndex);
+                }
+            }
+        }
+        
+        // Handle browser back/forward
+        window.addEventListener('popstate', handleRoute);
+        
+        // Check initial route
+        handleRoute();
+
+        // Typewriter effect
+        const typewriter = document.querySelector('.typewriter');
+        if (typewriter) {
+            const words = JSON.parse(typewriter.dataset.words);
+            let wordIndex = 0;
+            let isDeleting = false;
+            let currentText = '';
+            
+            function type() {
+                const currentWord = words[wordIndex % words.length];
+                
+                if (isDeleting) {
+                    currentText = currentWord.substring(0, currentText.length - 1);
+                } else {
+                    currentText = currentWord.substring(0, currentText.length + 1);
+                }
+                
+                typewriter.textContent = currentText;
+                
+                let typeSpeed = isDeleting ? 100 : 150;
+                
+                if (!isDeleting && currentText === currentWord) {
+                    typeSpeed = 2000; // Pause at end
+                    isDeleting = true;
+                } else if (isDeleting && currentText === '') {
+                    isDeleting = false;
+                    wordIndex++;
+                    typeSpeed = 500; // Pause before new word
+                }
+                
+                setTimeout(type, typeSpeed);
+            }
+            
+            setTimeout(type, 1000);
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
     </script>
+    <!-- Load modular JavaScript for development -->
+    <script type="module" src="/src/js/app.js"></script>
 </body>
 </html>

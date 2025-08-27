@@ -2,9 +2,11 @@
 /node_modules
 /.pnp
 .pnp.js
+package-lock.json
 
 # testing
 /coverage
+*.log
 
 # next.js
 /.next/
@@ -12,6 +14,7 @@
 
 # production
 /build
+/dist
 
 # misc
 .DS_Store
@@ -46,3 +49,6 @@ Thumbs.db
 /storage/*
 /config/master.key
 /public/assets
+
+# Claude context file
+CLAUDE.md
