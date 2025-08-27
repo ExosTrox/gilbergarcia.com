@@ -10,6 +10,8 @@ export default function SimpleMinimal() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
+  const [selectedPost, setSelectedPost] = useState(null);
+  const [showArticle, setShowArticle] = useState(false);
   const [newPost, setNewPost] = useState({
     title: '',
     category: '',
@@ -296,7 +298,10 @@ export default function SimpleMinimal() {
                 </p>
                 
                 <div className="card-footer">
-                  <button onClick={() => alert('Article view coming soon!')} className="read-link">
+                  <button onClick={() => {
+                    setSelectedPost(post);
+                    setShowArticle(true);
+                  }} className="read-link">
                     <span>Read Article</span>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                       <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -365,6 +370,45 @@ export default function SimpleMinimal() {
           <p>© 2024 Gilber Garcia · Crafted with care</p>
         </div>
       </footer>
+
+      {/* Article Viewer Modal */}
+      {showArticle && selectedPost && (
+        <div className="article-modal-overlay" onClick={() => setShowArticle(false)}>
+          <div className="article-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="article-close" onClick={() => setShowArticle(false)}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+            
+            <article className="article-viewer">
+              <header className="article-viewer-header">
+                <div className="article-viewer-meta">
+                  {selectedPost.category && <span className="article-viewer-category">{selectedPost.category}</span>}
+                  <span className="article-viewer-date">
+                    {new Date(selectedPost.date).toLocaleDateString('en-US', { 
+                      year: 'numeric', 
+                      month: 'long', 
+                      day: 'numeric' 
+                    })}
+                  </span>
+                  <span className="article-viewer-readtime">{selectedPost.readTime}</span>
+                </div>
+                <h1 className="article-viewer-title">{selectedPost.title}</h1>
+                {selectedPost.description && (
+                  <p className="article-viewer-description">{selectedPost.description}</p>
+                )}
+              </header>
+
+              <div className="article-viewer-content">
+                {selectedPost.content.split('\n').map((paragraph, i) => (
+                  paragraph.trim() && <p key={i}>{paragraph}</p>
+                ))}
+              </div>
+            </article>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
