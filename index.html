@@ -1105,7 +1105,7 @@
         <!-- Header -->
         <header>
             <nav>
-                <a href="/" class="logo">
+                <a href="/" class="logo" id="logoLink">
                     Gilber Garcia<span class="logo-dot" id="secretTrigger"></span>
                 </a>
                 <div class="nav-links">
@@ -1435,7 +1435,10 @@ Crear un emprendimiento que deje huella requiere valentía para ir más allá de
         }
 
         // Secret trigger
-        document.getElementById('secretTrigger').addEventListener('click', (e) => {
+        const secretDot = document.getElementById('secretTrigger');
+        const logoLink = document.getElementById('logoLink');
+        
+        secretDot.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
             clickCount++;
@@ -1445,7 +1448,16 @@ Crear un emprendimiento que deje huella requiere valentía para ir más allá de
             
             if (clickCount === 3) {
                 document.getElementById('loginModal').classList.add('active');
+                document.getElementById('adminPassword').focus();
                 clickCount = 0;
+            }
+        });
+        
+        // Prevent logo link navigation when clicking the dot
+        logoLink.addEventListener('click', (e) => {
+            if (e.target.id === 'secretTrigger') {
+                e.preventDefault();
+                return false;
             }
         });
 
