@@ -1,29 +1,18 @@
-import { defineConfig } from 'vite';
-import { resolve } from 'path';
+import { defineConfig } from 'vite'
 
 export default defineConfig({
-  base: '/',
+  root: '.',
   server: {
     port: 3000,
-    open: true,
-    // Handle routing for SPA
-    historyApiFallback: true
+    open: true
   },
   build: {
     outDir: 'dist',
-    assetsDir: 'assets',
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true
-      }
-    },
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'index.html'),
-        admin: resolve(__dirname, 'admin.html')
+        main: './index.html',
+        admin: './admin.html'
       }
     }
   }
-});
+})

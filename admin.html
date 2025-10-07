@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Gilber Garcia</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
     <style>
         * {
@@ -36,22 +34,6 @@
             color: var(--text-primary);
             background: var(--bg-primary);
             min-height: 100vh;
-            background-image: 
-                repeating-linear-gradient(
-                    0deg,
-                    transparent,
-                    transparent 2px,
-                    rgba(0,0,0,0.03) 2px,
-                    rgba(0,0,0,0.03) 4px
-                ),
-                repeating-linear-gradient(
-                    90deg,
-                    transparent,
-                    transparent 2px,
-                    rgba(0,0,0,0.03) 2px,
-                    rgba(0,0,0,0.03) 4px
-                );
-            background-size: 4px 4px;
         }
 
         .container {
@@ -63,9 +45,8 @@
         /* Header */
         header {
             padding: 30px 0;
-            border-bottom: 4px solid var(--border);
             background: var(--bg-secondary);
-            box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+            margin-bottom: 40px;
         }
 
         nav {
@@ -77,10 +58,7 @@
         .logo {
             font-family: 'Press Start 2P', cursive;
             font-size: 16px;
-            font-weight: 400;
-            text-decoration: none;
             color: var(--text-primary);
-            letter-spacing: 0;
             text-transform: uppercase;
             text-shadow: 2px 2px 0 var(--accent);
         }
@@ -95,761 +73,40 @@
             text-decoration: none;
             font-size: 18px;
             padding: 8px 16px;
-            border: 2px solid transparent;
-            transition: all 0.1s steps(1);
-            font-family: 'VT323', monospace;
+            background: var(--bg-primary);
+            border: 2px solid var(--border);
+            transition: all 0.2s ease;
             text-transform: uppercase;
         }
 
         .nav-link:hover {
-            color: var(--accent);
-            border: 2px solid var(--border);
-            background: var(--bg-primary);
-            box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
-        }
-
-        /* Admin Panel */
-        .admin-panel {
-            padding: 40px 0;
-        }
-
-        .panel-title {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 24px;
-            margin-bottom: 40px;
-            text-transform: uppercase;
-            color: var(--accent);
-            text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
-            text-align: center;
-            padding: 20px;
-            background: var(--bg-secondary);
-            border: 4px solid var(--border);
-            box-shadow: 6px 6px 0 rgba(0,0,0,0.2);
-        }
-
-        /* Tabs */
-        .admin-tabs {
-            display: flex;
-            gap: 0;
-            margin-bottom: 40px;
-            background: var(--bg-secondary);
-            border: 3px solid var(--border);
-            box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
-            padding: 0;
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 16px 24px;
-            background: var(--bg-primary);
-            border: none;
-            border-right: 3px solid var(--border);
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-family: 'VT323', monospace;
-            font-size: 20px;
-            text-transform: uppercase;
-            transition: all 0.1s steps(1);
-        }
-
-        .tab-btn:last-child {
-            border-right: none;
-        }
-
-        .tab-btn:hover {
-            background: var(--bg-secondary);
-        }
-
-        .tab-btn.active {
             background: var(--accent);
             color: white;
-            box-shadow: inset 0 3px 0 rgba(0,0,0,0.3);
+            transform: translateY(-2px);
         }
 
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Editor */
-        .editor-container {
+        /* Main Content */
+        .admin-content {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 30px;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
         }
 
-        .editor-panel,
-        .preview-panel {
+        /* Editor Section */
+        .editor-section {
             background: white;
-            border: 4px solid var(--border);
             padding: 30px;
-            box-shadow: 6px 6px 0 rgba(0,0,0,0.2);
+            border-radius: 0;
+            box-shadow: 0 0 0 3px var(--border);
         }
 
-        .post-title-input {
-            width: 100%;
-            padding: 16px;
-            border: 3px solid var(--border);
-            background: white;
-            color: var(--text-primary);
-            font-family: 'VT323', monospace;
-            font-size: 28px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            box-shadow: inset 2px 2px 0 rgba(0,0,0,0.1);
-        }
-
-        .post-title-input:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 2px var(--accent-alt);
-        }
-
-        /* Category and Tags */
-        .post-meta-inputs {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 20px;
-            margin-bottom: 20px;
-            padding: 16px;
-            background: var(--bg-secondary);
-            border: 2px dashed var(--border);
-        }
-
-        .meta-label {
-            display: block;
-            font-family: 'VT323', monospace;
+        .section-title {
+            font-family: 'Press Start 2P', cursive;
             font-size: 18px;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
+            margin-bottom: 30px;
             text-transform: uppercase;
-        }
-
-        .meta-label::after {
-            content: ':';
             color: var(--accent);
-        }
-
-        .category-select {
-            width: 100%;
-            padding: 10px;
-            border: 3px solid var(--border);
-            background: white;
-            font-family: 'VT323', monospace;
-            font-size: 18px;
-            color: var(--text-primary);
-            cursor: pointer;
-            text-transform: uppercase;
-        }
-
-        .category-select:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
-        .tags-input {
-            width: 100%;
-            padding: 10px;
-            border: 3px solid var(--border);
-            background: white;
-            font-family: 'VT323', monospace;
-            font-size: 18px;
-            color: var(--text-primary);
-        }
-
-        .tags-input:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
-        .rich-editor {
-            min-height: 400px;
-            padding: 20px;
-            border: 3px solid var(--border);
-            background: white;
-            color: var(--text-primary);
-            font-family: 'VT323', monospace;
-            font-size: 20px;
-            line-height: 1.6;
-            box-shadow: inset 2px 2px 0 rgba(0,0,0,0.1);
-        }
-
-        .rich-editor:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
-        .editor-toolbar {
-            display: flex;
-            gap: 4px;
-            padding: 12px;
-            background: var(--bg-secondary);
-            border: 3px solid var(--border);
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-
-        .editor-toolbar button {
-            padding: 10px 14px;
-            background: var(--bg-primary);
-            border: 2px solid var(--border);
-            cursor: pointer;
-            font-family: 'VT323', monospace;
-            font-size: 18px;
-            box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
-            transition: all 0.1s steps(1);
-        }
-
-        .editor-toolbar button:hover {
-            background: var(--accent);
-            color: white;
-            transform: translate(-1px, -1px);
-            box-shadow: 3px 3px 0 rgba(0,0,0,0.2);
-        }
-
-        .editor-toolbar button:active {
-            transform: translate(1px, 1px);
-            box-shadow: 1px 1px 0 rgba(0,0,0,0.2);
-        }
-
-        .toolbar-separator {
-            width: 2px;
-            background: var(--border);
-            margin: 0 8px;
-        }
-
-        .editor-actions {
-            display: flex;
-            gap: 20px;
-            justify-content: flex-end;
-        }
-
-        .btn-primary,
-        .btn-secondary {
-            padding: 16px 32px;
-            font-family: 'Press Start 2P', cursive;
-            font-size: 12px;
-            cursor: pointer;
-            border: 3px solid var(--border);
-            text-transform: uppercase;
-            transition: all 0.1s steps(1);
-        }
-
-        .btn-primary {
-            background: var(--accent);
-            color: white;
-            box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
-        }
-
-        .btn-primary:hover {
-            background: var(--accent-hover);
-            transform: translate(-2px, -2px);
-            box-shadow: 6px 6px 0 rgba(0,0,0,0.3);
-        }
-
-        .btn-secondary {
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
-        }
-
-        .btn-secondary:hover {
-            background: var(--bg-secondary);
-            transform: translate(-2px, -2px);
-            box-shadow: 6px 6px 0 rgba(0,0,0,0.2);
-        }
-
-        /* Preview */
-        .preview-label {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 14px;
-            margin-bottom: 20px;
-            color: var(--accent);
-            text-transform: uppercase;
-            padding-bottom: 12px;
-            border-bottom: 2px dashed var(--border);
-        }
-
-        .preview-content {
-            padding: 20px;
-            background: var(--bg-primary);
-            border: 2px solid var(--border);
-            min-height: 400px;
-        }
-
-        .preview-title {
-            font-family: 'VT323', monospace;
-            font-size: 32px;
-            margin-bottom: 20px;
-            color: var(--text-primary);
-            text-transform: uppercase;
-            padding-bottom: 12px;
-            border-bottom: 2px dashed var(--border);
-        }
-
-        .preview-meta {
-            margin-bottom: 20px;
-        }
-
-        .preview-body {
-            color: var(--text-primary);
-            line-height: 1.7;
-            font-family: 'VT323', monospace;
-            font-size: 20px;
-        }
-
-        /* Auto Save */
-        .auto-save-indicator {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 10px;
-            font-family: 'VT323', monospace;
-            font-size: 16px;
-            color: var(--text-secondary);
-        }
-
-        .save-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--success);
-            display: inline-block;
-        }
-
-        .save-dot.saving {
-            background: var(--warning);
-            animation: blink 0.5s steps(1) infinite;
-        }
-
-        @keyframes blink {
-            0%, 49% { opacity: 1; }
-            50%, 100% { opacity: 0; }
-        }
-        
-        /* AI Correction Panel */
-        .ai-correction-panel {
-            margin-top: 20px;
-            padding: 16px;
-            background: var(--bg-secondary);
-            border: 2px dashed var(--border);
-        }
-        
-        .ai-status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 12px;
-            font-family: 'VT323', monospace;
-            font-size: 16px;
-            color: var(--text-secondary);
-        }
-        
-        .ai-indicator {
-            color: var(--success);
-            animation: pulse 2s steps(1) infinite;
-        }
-        
-        .ai-indicator.processing {
-            color: var(--warning);
-            animation: blink 0.5s steps(1) infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        
-        .corrections-list {
-            display: none;
-            max-height: 150px;
-            overflow-y: auto;
-        }
-        
-        .corrections-list.has-corrections {
-            display: block;
-        }
-        
-        .correction-item {
-            padding: 8px;
-            margin-bottom: 8px;
-            background: white;
-            border: 2px solid var(--border);
-            font-family: 'VT323', monospace;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.1s steps(1);
-        }
-        
-        .correction-item:hover {
-            background: var(--accent-alt);
-            color: white;
-            transform: translateX(4px);
-        }
-        
-        .correction-original {
-            color: var(--accent-hover);
-            text-decoration: line-through;
-        }
-        
-        .correction-arrow {
-            margin: 0 8px;
-            color: var(--text-secondary);
-        }
-        
-        .correction-suggested {
-            color: var(--success);
-            font-weight: bold;
-        }
-        
-        .rich-editor .error-highlight {
-            background: rgba(255, 107, 157, 0.2);
-            border-bottom: 2px wavy var(--accent-hover);
-            cursor: pointer;
-        }
-        
-        .rich-editor .corrected {
-            background: rgba(38, 222, 129, 0.2);
-            border-bottom: 2px solid var(--success);
-        }
-        
-        .rich-editor .auto-corrected {
-            background: rgba(0, 210, 211, 0.1);
-            border-bottom: 1px dotted var(--accent-alt);
-            position: relative;
-            cursor: help;
-        }
-        
-        .rich-editor .auto-corrected::after {
-            content: attr(title);
-            position: absolute;
-            bottom: 100%;
-            left: 0;
-            background: var(--border);
-            color: white;
-            padding: 4px 8px;
-            font-size: 14px;
-            white-space: nowrap;
-            display: none;
-            z-index: 1000;
-        }
-        
-        .rich-editor .auto-corrected:hover::after {
-            display: block;
-        }
-        
-        /* AI Assistant Panel */
-        .ai-assistant-panel {
-            margin-top: 20px;
-            background: var(--bg-primary);
-            border: 3px solid var(--accent-alt);
-            box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
-        }
-        
-        .ai-assistant-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px;
-            background: var(--accent-alt);
-            color: white;
-            font-family: 'Press Start 2P', cursive;
-            font-size: 12px;
-            cursor: pointer;
-        }
-        
-        .assistant-icon {
-            font-size: 20px;
-        }
-        
-        .assistant-toggle {
-            margin-left: auto;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            transition: transform 0.1s steps(1);
-        }
-        
-        .assistant-toggle.collapsed {
-            transform: rotate(-90deg);
-        }
-        
-        .ai-assistant-content {
-            padding: 16px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        
-        .ai-assistant-content.hidden {
-            display: none;
-        }
-        
-        .assistant-tabs {
-            display: flex;
-            gap: 0;
-            margin-bottom: 16px;
-            border: 2px solid var(--border);
-        }
-        
-        .assistant-tab {
-            flex: 1;
-            padding: 8px;
-            background: var(--bg-secondary);
-            border: none;
-            border-right: 2px solid var(--border);
-            font-family: 'VT323', monospace;
-            font-size: 18px;
-            cursor: pointer;
-            transition: all 0.1s steps(1);
-        }
-        
-        .assistant-tab:last-child {
-            border-right: none;
-        }
-        
-        .assistant-tab:hover {
-            background: var(--bg-primary);
-        }
-        
-        .assistant-tab.active {
-            background: var(--accent-alt);
-            color: white;
-        }
-        
-        .assistant-tab-content {
-            display: none;
-        }
-        
-        .assistant-tab-content.active {
-            display: block;
-        }
-        
-        .idea-suggestions {
-            min-height: 150px;
-            padding: 12px;
-            background: var(--bg-secondary);
-            border: 2px dashed var(--border);
-            margin-bottom: 16px;
-            font-family: 'VT323', monospace;
-            font-size: 18px;
-        }
-        
-        .assistant-hint {
-            color: var(--text-secondary);
-            text-align: center;
-            margin: 20px 0;
-        }
-        
-        .idea-item {
-            padding: 8px;
-            margin-bottom: 8px;
-            background: white;
-            border: 2px solid var(--border);
-            cursor: pointer;
-            transition: all 0.1s steps(1);
-        }
-        
-        .idea-item:hover {
-            background: var(--accent-alt);
-            color: white;
-            transform: translateX(4px);
-        }
-        
-        .ai-button {
-            width: 100%;
-            padding: 12px;
-            background: var(--accent);
-            color: white;
-            border: 3px solid var(--border);
-            font-family: 'Press Start 2P', cursive;
-            font-size: 10px;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: all 0.1s steps(1);
-            box-shadow: 3px 3px 0 rgba(0,0,0,0.2);
-        }
-        
-        .ai-button:hover {
-            background: var(--accent-hover);
-            transform: translate(-2px, -2px);
-            box-shadow: 5px 5px 0 rgba(0,0,0,0.2);
-        }
-        
-        .style-analysis {
-            padding: 12px;
-            background: var(--bg-secondary);
-            border: 2px dashed var(--border);
-            margin-bottom: 16px;
-            font-family: 'VT323', monospace;
-            font-size: 16px;
-        }
-        
-        .style-metric {
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .metric-label {
-            color: var(--text-secondary);
-            min-width: 140px;
-        }
-        
-        .metric-value {
-            color: var(--accent);
-            font-weight: bold;
-        }
-        
-        .word-cloud {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 8px;
-        }
-        
-        .word-chip {
-            padding: 4px 8px;
-            background: var(--accent-alt);
-            color: white;
-            font-size: 14px;
-            border: 2px solid var(--border);
-        }
-        
-        .ai-chat {
-            height: 200px;
-            overflow-y: auto;
-            padding: 12px;
-            background: var(--bg-secondary);
-            border: 2px dashed var(--border);
-            margin-bottom: 12px;
-            font-family: 'VT323', monospace;
-            font-size: 18px;
-        }
-        
-        .chat-message {
-            margin-bottom: 12px;
-            padding: 8px;
-            background: white;
-            border: 2px solid var(--border);
-        }
-        
-        .chat-message.user {
-            background: var(--accent-alt);
-            color: white;
-            margin-left: 20px;
-        }
-        
-        .chat-message.assistant {
-            margin-right: 20px;
-        }
-        
-        .chat-author {
-            font-weight: bold;
-            margin-right: 8px;
-        }
-        
-        .chat-input-container {
-            display: flex;
-            gap: 8px;
-        }
-        
-        .chat-input {
-            flex: 1;
-            padding: 10px;
-            border: 3px solid var(--border);
-            background: white;
-            font-family: 'VT323', monospace;
-            font-size: 18px;
-        }
-        
-        .chat-input:focus {
-            outline: none;
-            border-color: var(--accent-alt);
-        }
-        
-        .chat-send {
-            padding: 10px 16px;
-            background: var(--accent-alt);
-            color: white;
-            border: 3px solid var(--border);
-            font-size: 20px;
-            cursor: pointer;
-            transition: all 0.1s steps(1);
-        }
-        
-        .chat-send:hover {
-            background: var(--accent);
-            transform: scale(1.1);
-        }
-
-        /* Posts Manager */
-        .posts-grid {
-            display: grid;
-            gap: 20px;
-        }
-
-        .post-card {
-            background: white;
-            border: 3px solid var(--border);
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            transition: all 0.1s steps(1);
-            box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
-        }
-
-        .post-card:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 6px 6px 0 rgba(0,0,0,0.2);
-            background: var(--bg-secondary);
-        }
-
-        .post-info h3 {
-            font-family: 'VT323', monospace;
-            font-size: 24px;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
-
-        .post-date {
-            font-size: 16px;
-            color: var(--text-secondary);
-        }
-
-        .post-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .post-actions button {
-            padding: 8px 12px;
-            border: 2px solid var(--border);
-            background: var(--bg-primary);
-            cursor: pointer;
-            font-family: 'VT323', monospace;
-            font-size: 16px;
-            transition: all 0.1s steps(1);
-            box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
-            text-transform: uppercase;
-        }
-
-        .post-actions button:hover {
-            background: var(--accent);
-            color: white;
-            transform: translate(-1px, -1px);
-            box-shadow: 3px 3px 0 rgba(0,0,0,0.2);
-        }
-
-        /* Settings */
-        .settings-form {
-            max-width: 600px;
         }
 
         .form-group {
@@ -858,2583 +115,559 @@
 
         .form-label {
             display: block;
-            font-family: 'VT323', monospace;
             font-size: 18px;
             color: var(--text-secondary);
             margin-bottom: 10px;
             text-transform: uppercase;
         }
 
-        .form-input {
+        .form-input,
+        .form-textarea {
             width: 100%;
             padding: 12px;
-            border: 3px solid var(--border);
-            background: white;
+            border: 2px solid var(--border);
+            background: var(--bg-primary);
             font-family: 'VT323', monospace;
             font-size: 20px;
-            box-shadow: inset 2px 2px 0 rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
         }
 
-        .form-input:focus {
+        .form-input:focus,
+        .form-textarea:focus {
             outline: none;
             border-color: var(--accent);
-        }
-
-        /* Stats */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
             background: white;
-            padding: 24px;
+        }
+
+        .form-textarea {
+            min-height: 300px;
+            resize: vertical;
+        }
+
+        .editor-actions {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 24px;
             border: 3px solid var(--border);
-            text-align: center;
-            box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
-        }
-
-        .stat-number {
+            background: var(--bg-primary);
             font-family: 'Press Start 2P', cursive;
-            font-size: 28px;
-            color: var(--accent);
-            text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
         }
 
-        .stat-label {
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-secondary);
+            transform: translateY(-2px);
+        }
+
+        /* Posts List */
+        .posts-section {
+            background: white;
+            padding: 30px;
+            box-shadow: 0 0 0 3px var(--border);
+        }
+
+        .posts-list {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .post-item {
+            padding: 20px;
+            margin-bottom: 15px;
+            background: var(--bg-primary);
+            border: 2px solid var(--border);
+            transition: all 0.2s ease;
+        }
+
+        .post-item:hover {
+            background: var(--bg-secondary);
+            transform: translateX(5px);
+        }
+
+        .post-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .post-meta {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .post-btn {
+            padding: 6px 12px;
+            border: 2px solid var(--border);
+            background: white;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+        }
+
+        .post-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        .post-btn.delete:hover {
+            background: var(--accent-hover);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        /* Status Message */
+        .status-message {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: var(--success);
+            color: white;
+            border: 3px solid var(--border);
             font-family: 'VT323', monospace;
             font-size: 18px;
-            color: var(--text-secondary);
-            margin-top: 8px;
             text-transform: uppercase;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        .status-message.show {
+            display: block;
+        }
+
+        .status-message.error {
+            background: var(--accent-hover);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        /* Category Selector */
+        .category-selector {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .category-option {
+            flex: 1;
+            min-width: 100px;
+            padding: 15px 10px;
+            background: white;
+            border: 3px solid var(--border);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 0;
+            background: var(--accent);
+            transition: height 0.3s ease;
+            z-index: 0;
+        }
+
+        .category-option.active::before {
+            height: 100%;
+        }
+
+        .category-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 0 rgba(0,0,0,0.2);
+        }
+
+        .category-option.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent-hover);
+            box-shadow: 0 3px 0 var(--accent-hover);
+        }
+
+        .category-icon {
+            display: block;
+            font-size: 28px;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+            filter: grayscale(100%);
+            transition: all 0.2s ease;
+        }
+
+        .category-option.active .category-icon,
+        .category-option:hover .category-icon {
+            filter: grayscale(0%);
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .category-name {
+            display: block;
+            font-family: 'VT323', monospace;
+            font-size: 16px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 1px;
+        }
+
+        .category-option.active .category-name {
+            font-weight: bold;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .editor-container {
+            .admin-content {
                 grid-template-columns: 1fr;
             }
-
-            .admin-tabs {
+            .category-selector {
                 flex-direction: column;
             }
-
-            .tab-btn {
-                border-right: none;
-                border-bottom: 3px solid var(--border);
-            }
-
-            .tab-btn:last-child {
-                border-bottom: none;
+            .category-option {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <nav class="container">
-            <a href="/" class="logo">GILBER GARCIA [ADMIN]</a>
-            <div class="nav-links">
-                <a href="/" class="nav-link">[← BACK]</a>
-                <a href="#" class="nav-link" id="logoutBtn">[LOGOUT]</a>
-            </div>
-        </nav>
+        <div class="container">
+            <nav>
+                <div class="logo">Admin Panel</div>
+                <div class="nav-links">
+                    <a href="/" class="nav-link">Ver Sitio</a>
+                    <a href="#" class="nav-link" onclick="logout()">Salir</a>
+                </div>
+            </nav>
+        </div>
     </header>
 
     <div class="container">
-        <div class="admin-panel">
-            <h1 class="panel-title">ADMIN DASHBOARD</h1>
-
-            <!-- Tabs -->
-            <div class="admin-tabs">
-                <button class="tab-btn active" onclick="switchTab('writeTab')">WRITE POST</button>
-                <button class="tab-btn" onclick="switchTab('manageTab')">MANAGE POSTS</button>
-                <button class="tab-btn" onclick="switchTab('settingsTab')">SETTINGS</button>
-            </div>
-
-            <!-- Write Tab -->
-            <div id="writeTab" class="tab-content active">
-                <div class="editor-container">
-                    <div class="editor-panel">
-                        <input type="text" id="postTitle" class="post-title-input" placeholder="ENTER POST TITLE..." oninput="updatePreview()">
-                        
-                        <!-- Category and Tags -->
-                        <div class="post-meta-inputs">
-                            <div class="category-selector">
-                                <label class="meta-label">CATEGORY</label>
-                                <select id="postCategory" class="category-select" onchange="updatePreview()">
-                                    <option value="">SELECT...</option>
-                                    <option value="ai">AI & ML</option>
-                                    <option value="programming">PROGRAMMING</option>
-                                    <option value="productivity">PRODUCTIVITY</option>
-                                    <option value="business">BUSINESS</option>
-                                    <option value="technology">TECHNOLOGY</option>
-                                    <option value="life">LIFE</option>
-                                    <option value="tutorial">TUTORIAL</option>
-                                </select>
-                            </div>
-                            <div class="tags-input-container">
-                                <label class="meta-label">TAGS</label>
-                                <input type="text" id="postTags" class="tags-input" placeholder="tag1, tag2, tag3..." oninput="updatePreview()">
-                            </div>
-                        </div>
-                        
-                        <!-- Toolbar -->
-                        <div class="editor-toolbar">
-                            <button onclick="formatText('bold')" title="Bold"><b>B</b></button>
-                            <button onclick="formatText('italic')" title="Italic"><i>I</i></button>
-                            <button onclick="formatText('underline')" title="Underline"><u>U</u></button>
-                            <span class="toolbar-separator"></span>
-                            <button onclick="formatText('h2')" title="Heading">H2</button>
-                            <button onclick="formatText('h3')" title="Subheading">H3</button>
-                            <span class="toolbar-separator"></span>
-                            <button onclick="formatText('ul')" title="Bullet List">•LIST</button>
-                            <button onclick="formatText('ol')" title="Numbered List">1.LIST</button>
-                            <span class="toolbar-separator"></span>
-                            <button onclick="formatText('link')" title="Link">LINK</button>
-                            <button onclick="formatText('code')" title="Code">CODE</button>
-                        </div>
-                        
-                        <div id="postContent" class="rich-editor" contenteditable="true" oninput="updatePreview()" placeholder="START WRITING YOUR POST..."></div>
-                        
-                        <div class="auto-save-indicator">
-                            <span class="save-dot" id="saveDot"></span>
-                            <span id="saveStatus">READY</span>
-                        </div>
-                        
-                        <div class="ai-correction-panel">
-                            <div class="ai-status">
-                                <span class="ai-indicator" id="aiIndicator">●</span>
-                                <span id="aiStatus">AI SPANISH CORRECTOR: ACTIVE</span>
-                            </div>
-                            <div class="corrections-list" id="correctionsList"></div>
-                        </div>
-                        
-                        <!-- AI Assistant Panel -->
-                        <div class="ai-assistant-panel">
-                            <div class="ai-assistant-header">
-                                <span class="assistant-icon">🤖</span>
-                                <span class="assistant-title">AI WRITING ASSISTANT</span>
-                                <button class="assistant-toggle" onclick="toggleAssistant()">▼</button>
-                            </div>
-                            <div class="ai-assistant-content" id="aiAssistantContent">
-                                <div class="assistant-tabs">
-                                    <button class="assistant-tab active" onclick="switchAssistantTab('ideas')">IDEAS</button>
-                                    <button class="assistant-tab" onclick="switchAssistantTab('style')">STYLE</button>
-                                    <button class="assistant-tab" onclick="switchAssistantTab('chat')">CHAT</button>
-                                </div>
-                                
-                                <!-- Ideas Tab -->
-                                <div id="ideasTab" class="assistant-tab-content active">
-                                    <div class="idea-suggestions" id="ideaSuggestions">
-                                        <p class="assistant-hint">START WRITING TO GET PERSONALIZED SUGGESTIONS...</p>
-                                    </div>
-                                    <button class="ai-button" onclick="generateIdeas()">
-                                        <span>GENERATE IDEAS</span>
-                                    </button>
-                                </div>
-                                
-                                <!-- Style Tab -->
-                                <div id="styleTab" class="assistant-tab-content">
-                                    <div class="style-analysis" id="styleAnalysis">
-                                        <div class="style-metric">
-                                            <span class="metric-label">YOUR STYLE:</span>
-                                            <span class="metric-value" id="styleType">ANALYZING...</span>
-                                        </div>
-                                        <div class="style-metric">
-                                            <span class="metric-label">AVG SENTENCE:</span>
-                                            <span class="metric-value" id="avgSentence">0 WORDS</span>
-                                        </div>
-                                        <div class="style-metric">
-                                            <span class="metric-label">TONE:</span>
-                                            <span class="metric-value" id="writingTone">NEUTRAL</span>
-                                        </div>
-                                        <div class="style-metric">
-                                            <span class="metric-label">FAVORITE WORDS:</span>
-                                            <div class="word-cloud" id="favoriteWords"></div>
-                                        </div>
-                                    </div>
-                                    <button class="ai-button" onclick="improveStyle()">
-                                        <span>MATCH MY STYLE</span>
-                                    </button>
-                                </div>
-                                
-                                <!-- Chat Tab -->
-                                <div id="chatTab" class="assistant-tab-content">
-                                    <div class="ai-chat" id="aiChat">
-                                        <div class="chat-message assistant">
-                                            <span class="chat-author">AI:</span>
-                                            <span class="chat-text">¡Hola! Soy tu asistente de escritura. ¿En qué puedo ayudarte hoy?</span>
-                                        </div>
-                                    </div>
-                                    <div class="chat-input-container">
-                                        <input type="text" id="chatInput" class="chat-input" placeholder="Ask me anything..." onkeypress="if(event.key==='Enter') sendChatMessage()">
-                                        <button class="chat-send" onclick="sendChatMessage()">→</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Preview -->
-                    <div class="preview-panel">
-                        <h3 class="preview-label">LIVE PREVIEW</h3>
-                        <div class="preview-content">
-                            <h1 class="preview-title" id="previewTitle">YOUR TITLE HERE...</h1>
-                            <div class="preview-meta"></div>
-                            <div class="preview-body" id="previewContent">
-                                START WRITING TO SEE PREVIEW...
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="admin-content">
+            <!-- Editor Section -->
+            <section class="editor-section">
+                <h2 class="section-title">Crear Nueva Entrada</h2>
                 
-                <div class="editor-actions">
-                    <button onclick="saveDraft()" class="btn-secondary">SAVE DRAFT</button>
-                    <button onclick="publishPost()" class="btn-primary">PUBLISH POST</button>
+                <div class="form-group">
+                    <label class="form-label">Título</label>
+                    <input type="text" class="form-input" id="postTitle" placeholder="Título del post...">
                 </div>
-            </div>
 
-            <!-- Manage Tab -->
-            <div id="manageTab" class="tab-content">
-                <div class="posts-grid" id="postsGrid">
+                <div class="form-group">
+                    <label class="form-label">Descripción</label>
+                    <input type="text" class="form-input" id="postDescription" placeholder="Breve descripción...">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Categoría</label>
+                    <div class="category-selector" id="categorySelector">
+                        <div class="category-option active" data-value="technology" onclick="selectCategory(this)">
+                            <span class="category-icon">💻</span>
+                            <span class="category-name">Technology</span>
+                        </div>
+                        <div class="category-option" data-value="productivity" onclick="selectCategory(this)">
+                            <span class="category-icon">⚡</span>
+                            <span class="category-name">Productivity</span>
+                        </div>
+                        <div class="category-option" data-value="programming" onclick="selectCategory(this)">
+                            <span class="category-icon">🚀</span>
+                            <span class="category-name">Programming</span>
+                        </div>
+                        <div class="category-option" data-value="life" onclick="selectCategory(this)">
+                            <span class="category-icon">🌟</span>
+                            <span class="category-name">Life</span>
+                        </div>
+                        <div class="category-option" data-value="business" onclick="selectCategory(this)">
+                            <span class="category-icon">📈</span>
+                            <span class="category-name">Business</span>
+                        </div>
+                    </div>
+                    <input type="hidden" id="postCategory" value="technology">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Contenido</label>
+                    <textarea class="form-textarea" id="postContent" placeholder="Escribe tu contenido aquí..."></textarea>
+                </div>
+
+                <div class="editor-actions">
+                    <button class="btn btn-primary" onclick="savePost()">Publicar</button>
+                    <button class="btn btn-secondary" onclick="saveDraft()">Guardar Borrador</button>
+                    <button class="btn btn-secondary" onclick="clearForm()">Limpiar</button>
+                </div>
+            </section>
+
+            <!-- Posts List -->
+            <section class="posts-section">
+                <h2 class="section-title">Entradas</h2>
+                <div class="posts-list" id="postsList">
                     <!-- Posts will be loaded here -->
                 </div>
-            </div>
-
-            <!-- Settings Tab -->
-            <div id="settingsTab" class="tab-content">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-number" id="totalPosts">0</div>
-                        <div class="stat-label">TOTAL POSTS</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="totalViews">0</div>
-                        <div class="stat-label">TOTAL VIEWS</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="todayViews">0</div>
-                        <div class="stat-label">TODAY VIEWS</div>
-                    </div>
-                </div>
-                
-                <div class="settings-form">
-                    <div class="form-group">
-                        <label class="form-label">EXPORT POSTS</label>
-                        <button onclick="exportPosts()" class="btn-secondary">DOWNLOAD POSTS.JSON</button>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">IMPORT POSTS</label>
-                        <input type="file" id="importFile" class="form-input" accept=".json" onchange="importPosts(event)">
-                    </div>
-                </div>
-            </div>
+            </section>
         </div>
     </div>
 
-    <script src="js/intelligent-corrector.js"></script>
-    <script src="js/ai-brain.js"></script>
+    <!-- Status Message -->
+    <div class="status-message" id="statusMessage"></div>
+
     <script>
-        // Check auth
-        if (sessionStorage.getItem('isAdminAuth') !== 'true') {
-            alert('Please login through the main page');
+        // Check authentication
+        if (!sessionStorage.getItem('isAdminAuth')) {
             window.location.href = '/';
         }
 
         let editingPostId = null;
-        let autoSaveTimer = null;
 
-        // Logout
-        document.getElementById('logoutBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            sessionStorage.removeItem('isAdminAuth');
-            sessionStorage.removeItem('isAdmin');
-            window.location.href = '/';
-        });
+        // Load posts on page load
+        document.addEventListener('DOMContentLoaded', loadPosts);
 
-        // Tab switching
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
+        function loadPosts() {
+            const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+            const postsList = document.getElementById('postsList');
             
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            document.getElementById(tabName).classList.add('active');
-            
-            if (tabName === 'manageTab') {
-                loadPosts();
-            } else if (tabName === 'settingsTab') {
-                updateStats();
-            }
-        }
-
-        // Format text
-        function formatText(command) {
-            if (command === 'link') {
-                const url = prompt('Enter URL:');
-                if (url) {
-                    document.execCommand('createLink', false, url);
-                }
-            } else if (command === 'h2') {
-                document.execCommand('formatBlock', false, '<h2>');
-            } else if (command === 'h3') {
-                document.execCommand('formatBlock', false, '<h3>');
-            } else if (command === 'ul') {
-                document.execCommand('insertUnorderedList', false, null);
-            } else if (command === 'ol') {
-                document.execCommand('insertOrderedList', false, null);
-            } else if (command === 'code') {
-                document.execCommand('formatBlock', false, '<pre>');
-            } else {
-                document.execCommand(command, false, null);
-            }
-            updatePreview();
-        }
-
-        // Update preview
-        function updatePreview() {
-            const title = document.getElementById('postTitle').value || 'UNTITLED POST';
-            const content = document.getElementById('postContent').innerHTML || '<p>Start writing...</p>';
-            const category = document.getElementById('postCategory').value;
-            const tagsInput = document.getElementById('postTags').value;
-            const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()).filter(t => t) : [];
-            
-            document.getElementById('previewTitle').textContent = title;
-            document.getElementById('previewContent').innerHTML = content;
-            
-            const previewMeta = document.querySelector('.preview-meta');
-            let metaHTML = '';
-            if (category) {
-                metaHTML += `<span style="background: var(--accent-alt); color: white; padding: 4px 8px; font-family: 'VT323', monospace; text-transform: uppercase;">${category}</span>`;
-            }
-            if (tags.length > 0) {
-                metaHTML += '<div style="margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap;">';
-                tags.forEach(tag => {
-                    metaHTML += `<span style="padding: 4px 12px; background: var(--accent); color: white; font-family: 'VT323', monospace; font-size: 14px; text-transform: uppercase; border: 2px solid var(--border); box-shadow: 2px 2px 0 rgba(0,0,0,0.2);">${tag}</span>`;
-                });
-                metaHTML += '</div>';
-            }
-            previewMeta.innerHTML = metaHTML;
-            
-            // Auto save
-            clearTimeout(autoSaveTimer);
-            document.getElementById('saveDot').classList.add('saving');
-            document.getElementById('saveStatus').textContent = 'SAVING...';
-            
-            autoSaveTimer = setTimeout(() => {
-                saveDraft();
-                document.getElementById('saveDot').classList.remove('saving');
-                document.getElementById('saveStatus').textContent = 'SAVED';
-            }, 2000);
-        }
-
-        // Save draft
-        function saveDraft() {
-            const draft = {
-                title: document.getElementById('postTitle').value,
-                content: document.getElementById('postContent').innerHTML,
-                category: document.getElementById('postCategory').value,
-                tags: document.getElementById('postTags').value
-            };
-            localStorage.setItem('currentDraft', JSON.stringify(draft));
-        }
-
-        // Load draft
-        function loadDraft() {
-            const saved = localStorage.getItem('currentDraft');
-            if (saved) {
-                const draft = JSON.parse(saved);
-                document.getElementById('postTitle').value = draft.title || '';
-                document.getElementById('postContent').innerHTML = draft.content || '';
-                document.getElementById('postCategory').value = draft.category || '';
-                document.getElementById('postTags').value = draft.tags || '';
-                updatePreview();
-            }
-        }
-
-        // Publish post
-        function publishPost() {
-            const title = document.getElementById('postTitle').value.trim();
-            const content = document.getElementById('postContent').innerHTML.trim();
-            const category = document.getElementById('postCategory').value;
-            const tagsInput = document.getElementById('postTags').value;
-            const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()).filter(t => t) : [];
-            
-            if (!title || !content) {
-                alert('Please fill in both title and content');
+            if (posts.length === 0) {
+                postsList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📝</div>
+                        <p>No hay entradas todavía</p>
+                    </div>
+                `;
                 return;
             }
-            
-            const now = new Date();
-            const post = {
-                id: editingPostId || Date.now(),
-                date: now.getDate().toString(),
-                dateISO: now.toISOString(),
-                title: title,
-                content: content,
-                category: category,
-                tags: tags,
-                excerpt: content.replace(/<[^>]*>/g, '').substring(0, 150) + '...',
-                author: 'Gilber Garcia',
-                readTime: Math.ceil(content.replace(/<[^>]*>/g, '').split(/\s+/).length / 200) + ' min read'
-            };
-            
-            const saved = localStorage.getItem('blogPosts');
-            let posts = saved ? JSON.parse(saved) : [];
+
+            postsList.innerHTML = posts.map(post => `
+                <div class="post-item">
+                    <div class="post-title">${post.title}</div>
+                    <div class="post-meta">${new Date(post.dateISO || post.date).toLocaleDateString()} • ${post.category || 'General'}</div>
+                    <div class="post-actions">
+                        <button class="post-btn" onclick="editPost('${post.id}')">Editar</button>
+                        <button class="post-btn delete" onclick="deletePost('${post.id}')">Eliminar</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function savePost() {
+            const title = document.getElementById('postTitle').value.trim();
+            const description = document.getElementById('postDescription').value.trim();
+            const content = document.getElementById('postContent').value.trim();
+            const category = document.getElementById('postCategory').value;
+
+            if (!title || !content) {
+                showStatus('Por favor completa título y contenido', 'error');
+                return;
+            }
+
+            const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
             
             if (editingPostId) {
-                const index = posts.findIndex(p => p.id === editingPostId);
-                if (index !== -1) {
-                    posts[index] = post;
+                // Update existing post
+                const postIndex = posts.findIndex(p => p.id === editingPostId);
+                if (postIndex !== -1) {
+                    posts[postIndex] = {
+                        ...posts[postIndex],
+                        title,
+                        description,
+                        content,
+                        category,
+                        updatedAt: new Date().toISOString()
+                    };
                 }
                 editingPostId = null;
             } else {
-                posts.unshift(post);
+                // Create new post
+                const newPost = {
+                    id: Date.now().toString(),
+                    title,
+                    description,
+                    content,
+                    category,
+                    dateISO: new Date().toISOString(),
+                    date: new Date().getDate().toString(),
+                    author: 'Gilber Garcia'
+                };
+                posts.unshift(newPost);
             }
-            
+
             localStorage.setItem('blogPosts', JSON.stringify(posts));
-            localStorage.removeItem('currentDraft');
-            
-            document.getElementById('postTitle').value = '';
-            document.getElementById('postContent').innerHTML = '';
-            document.getElementById('postCategory').value = '';
-            document.getElementById('postTags').value = '';
-            updatePreview();
-            
-            alert('Post published successfully!');
-            switchTab('manageTab');
+            clearForm();
+            loadPosts();
+            showStatus('Entrada publicada exitosamente');
         }
 
-        // Load posts
-        function loadPosts() {
-            const saved = localStorage.getItem('blogPosts');
-            const posts = saved ? JSON.parse(saved) : [];
-            
-            const grid = document.getElementById('postsGrid');
-            if (posts.length === 0) {
-                grid.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">NO POSTS YET</p>';
-                return;
-            }
-            
-            grid.innerHTML = posts.map((post, index) => `
-                <div class="post-card">
-                    <div class="post-info">
-                        <h3>${post.title}</h3>
-                        <p class="post-date">${new Date(post.dateISO).toLocaleDateString()}</p>
-                    </div>
-                    <div class="post-actions">
-                        <button onclick="editPost(${index})">EDIT</button>
-                        <button onclick="deletePost(${index})">DELETE</button>
-                    </div>
-                </div>
-            `).join('');
+        function saveDraft() {
+            // Save to session storage as draft
+            const draft = {
+                title: document.getElementById('postTitle').value,
+                description: document.getElementById('postDescription').value,
+                content: document.getElementById('postContent').value,
+                category: document.getElementById('postCategory').value
+            };
+            sessionStorage.setItem('postDraft', JSON.stringify(draft));
+            showStatus('Borrador guardado');
         }
 
-        // Edit post
-        function editPost(index) {
-            const saved = localStorage.getItem('blogPosts');
-            const posts = saved ? JSON.parse(saved) : [];
-            const post = posts[index];
+        function editPost(id) {
+            const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+            const post = posts.find(p => p.id === id);
             
             if (post) {
-                editingPostId = post.id;
-                document.getElementById('postTitle').value = post.title;
-                document.getElementById('postContent').innerHTML = post.content;
-                document.getElementById('postCategory').value = post.category || '';
-                document.getElementById('postTags').value = post.tags ? post.tags.join(', ') : '';
-                updatePreview();
+                document.getElementById('postTitle').value = post.title || '';
+                document.getElementById('postDescription').value = post.description || '';
+                document.getElementById('postContent').value = post.content || '';
+                // Set category
+                const categoryValue = post.category || 'technology';
+                document.getElementById('postCategory').value = categoryValue;
                 
-                document.querySelector('.tab-btn').click();
+                // Update visual selector
+                document.querySelectorAll('.category-option').forEach(opt => {
+                    opt.classList.remove('active');
+                    if (opt.dataset.value === categoryValue) {
+                        opt.classList.add('active');
+                    }
+                });
+                editingPostId = id;
+                
+                // Scroll to editor
+                document.querySelector('.editor-section').scrollIntoView({ behavior: 'smooth' });
             }
         }
 
-        // Delete post
-        function deletePost(index) {
-            if (confirm('Are you sure you want to delete this post?')) {
-                const saved = localStorage.getItem('blogPosts');
-                let posts = saved ? JSON.parse(saved) : [];
-                posts.splice(index, 1);
-                localStorage.setItem('blogPosts', JSON.stringify(posts));
+        function deletePost(id) {
+            if (confirm('¿Estás seguro de eliminar esta entrada?')) {
+                const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+                const filtered = posts.filter(p => p.id !== id);
+                localStorage.setItem('blogPosts', JSON.stringify(filtered));
                 loadPosts();
+                showStatus('Entrada eliminada');
             }
         }
 
-        // Export posts
-        function exportPosts() {
-            const saved = localStorage.getItem('blogPosts');
-            const posts = saved ? JSON.parse(saved) : [];
+        function clearForm() {
+            document.getElementById('postTitle').value = '';
+            document.getElementById('postDescription').value = '';
+            document.getElementById('postContent').value = '';
+            document.getElementById('postCategory').value = 'technology';
             
-            const dataStr = JSON.stringify(posts, null, 2);
-            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
-            
-            const exportFileDefaultName = 'posts.json';
-            
-            const linkElement = document.createElement('a');
-            linkElement.setAttribute('href', dataUri);
-            linkElement.setAttribute('download', exportFileDefaultName);
-            linkElement.click();
+            // Reset category selector
+            document.querySelectorAll('.category-option').forEach(opt => {
+                opt.classList.remove('active');
+                if (opt.dataset.value === 'technology') {
+                    opt.classList.add('active');
+                }
+            });
+            editingPostId = null;
         }
 
-        // Import posts
-        function importPosts(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    try {
-                        const posts = JSON.parse(e.target.result);
-                        localStorage.setItem('blogPosts', JSON.stringify(posts));
-                        loadPosts();
-                        alert('Posts imported successfully');
-                    } catch (error) {
-                        alert('Invalid JSON file');
-                    }
-                };
-                reader.readAsText(file);
-            }
-        }
-
-        // Update stats
-        function updateStats() {
-            const saved = localStorage.getItem('blogPosts');
-            const posts = saved ? JSON.parse(saved) : [];
-            document.getElementById('totalPosts').textContent = posts.length;
+        function showStatus(message, type = 'success') {
+            const status = document.getElementById('statusMessage');
+            status.textContent = message;
+            status.className = `status-message show ${type}`;
             
-            const totalVisits = localStorage.getItem('totalVisits') || '0';
-            document.getElementById('totalViews').textContent = totalVisits;
-            
-            const todayVisits = sessionStorage.getItem('todayVisits') || '0';
-            document.getElementById('todayViews').textContent = todayVisits;
-        }
-
-        // Spanish AI Correction System
-        const spanishCorrections = {
-            // Common Spanish spelling mistakes
-            'aver': 'a ver',
-            'haver': 'haber',
-            'haber si': 'a ver si',
-            'ahi': 'ahí',
-            'hai': 'hay',
-            'alla': 'allá',
-            'halla': 'haya',
-            'valla': 'vaya',
-            'iva': 'iba',
-            'llendo': 'yendo',
-            'nadien': 'nadie',
-            'alomejor': 'a lo mejor',
-            'derrepente': 'de repente',
-            'enserio': 'en serio',
-            'atravez': 'a través',
-            'atraves': 'a través',
-            'porfavor': 'por favor',
-            'osea': 'o sea',
-            'ósea': 'o sea',
-            'apartir': 'a partir',
-            'depronto': 'de pronto',
-            'sobretodo': 'sobre todo',
-            'asi mismo': 'asimismo',
-            'demas': 'demás',
-            'tambien': 'también',
-            'ademas': 'además',
-            'despues': 'después',
-            'mas': 'más',
-            'dias': 'días',
-            'año': 'años',
-            'si no': 'sino',
-            'por que': 'porque',
-            'que hacer': 'quehacer',
-            'a parte': 'aparte',
-            'en vez': 'en vez',
-            'aveces': 'a veces',
-            'debes en cuando': 'de vez en cuando',
-            
-            // Accent corrections
-            'cafe': 'café',
-            'arbol': 'árbol',
-            'facil': 'fácil',
-            'dificil': 'difícil',
-            'ultimo': 'último',
-            'numero': 'número',
-            'telefono': 'teléfono',
-            'musica': 'música',
-            'pelicula': 'película',
-            'pagina': 'página',
-            'maquina': 'máquina',
-            'rapido': 'rápido',
-            'tipico': 'típico',
-            'fisico': 'físico',
-            'quimico': 'químico',
-            'matematicas': 'matemáticas',
-            'informatica': 'informática',
-            'tecnologia': 'tecnología',
-            'programacion': 'programación',
-            'aplicacion': 'aplicación',
-            'informacion': 'información',
-            'comunicacion': 'comunicación',
-            'educacion': 'educación',
-            'situacion': 'situación',
-            'atencion': 'atención',
-            'solucion': 'solución',
-            'conexion': 'conexión',
-            'corazon': 'corazón',
-            'razon': 'razón',
-            'estacion': 'estación',
-            'cancion': 'canción',
-            'funcion': 'función',
-            'produccion': 'producción',
-            'direccion': 'dirección',
-            'construccion': 'construcción',
-            'destruccion': 'destrucción',
-            'proteccion': 'protección',
-            'nutricion': 'nutrición',
-            'constitucion': 'constitución',
-            'revolucion': 'revolución',
-            'evolucion': 'evolución',
-            'contribucion': 'contribución',
-            'distribucion': 'distribución',
-            'resolucion': 'resolución',
-            'conclusion': 'conclusión',
-            'confusion': 'confusión',
-            'presion': 'presión',
-            'decision': 'decisión',
-            'precision': 'precisión',
-            'division': 'división',
-            'revision': 'revisión',
-            'television': 'televisión',
-            'vision': 'visión',
-            'mision': 'misión',
-            'pasion': 'pasión',
-            'ocasion': 'ocasión',
-            'profesion': 'profesión',
-            'expresion': 'expresión',
-            'impresion': 'impresión',
-            'sesion': 'sesión',
-            'version': 'versión',
-            'conversion': 'conversión',
-            'inversion': 'inversión',
-            'dimension': 'dimensión',
-            'extension': 'extensión',
-            'tension': 'tensión',
-            'comprension': 'comprensión',
-            'suspension': 'suspensión',
-            'pension': 'pensión',
-            
-            // Grammar patterns
-            'de el': 'del',
-            'a el': 'al',
-            'la la': 'la',
-            'el el': 'el',
-            'un un': 'un',
-            'una una': 'una',
-        };
-        
-        // Legacy function for compatibility
-        function checkSpanishGrammar() {
-            const content = document.getElementById('postContent');
-            const text = content.innerText || content.textContent || '';
-            
-            if (text === lastText) return;
-            lastText = text;
-            
-            // Now handled by IntelligentWritingCorrector
-        }
-        
-        function findCorrections(text) {
-            const corrections = [];
-            const words = text.toLowerCase().split(/\s+/);
-            
-            // Check individual words
-            words.forEach((word, index) => {
-                const cleanWord = word.replace(/[.,;:!?¿¡()[\]{}'"]/g, '');
-                if (spanishCorrections[cleanWord]) {
-                    corrections.push({
-                        original: cleanWord,
-                        suggested: spanishCorrections[cleanWord],
-                        index: index,
-                        type: 'spelling'
-                    });
-                }
-            });
-            
-            // Check phrases
-            const lowerText = text.toLowerCase();
-            for (const [wrong, correct] of Object.entries(spanishCorrections)) {
-                if (wrong.includes(' ')) {
-                    const regex = new RegExp(`\\b${wrong}\\b`, 'gi');
-                    let match;
-                    while ((match = regex.exec(lowerText)) !== null) {
-                        corrections.push({
-                            original: wrong,
-                            suggested: correct,
-                            index: match.index,
-                            type: 'phrase'
-                        });
-                    }
-                }
-            }
-            
-            return corrections;
-        }
-        
-        function displayCorrections(corrections) {
-            const correctionsList = document.getElementById('correctionsList');
-            correctionsList.innerHTML = corrections.map((correction, i) => `
-                <div class="correction-item" onclick="applyCorrection(${i})">
-                    <span class="correction-original">${correction.original}</span>
-                    <span class="correction-arrow">→</span>
-                    <span class="correction-suggested">${correction.suggested}</span>
-                </div>
-            `).join('');
-        }
-        
-        function highlightErrors(content, corrections) {
-            let html = content.innerHTML;
-            corrections.forEach(correction => {
-                const regex = new RegExp(`\\b${correction.original}\\b`, 'gi');
-                html = html.replace(regex, `<span class="error-highlight" data-correction="${correction.suggested}">$&</span>`);
-            });
-            content.innerHTML = html;
-        }
-        
-        function removeHighlights(content) {
-            const highlights = content.querySelectorAll('.error-highlight, .corrected');
-            highlights.forEach(highlight => {
-                const text = highlight.textContent;
-                highlight.replaceWith(text);
-            });
-        }
-        
-        function applyCorrection(index) {
-            const content = document.getElementById('postContent');
-            const corrections = findCorrections(content.innerText);
-            const correction = corrections[index];
-            
-            if (correction) {
-                let html = content.innerHTML;
-                const regex = new RegExp(`\\b${correction.original}\\b`, 'gi');
-                html = html.replace(regex, `<span class="corrected">${correction.suggested}</span>`);
-                content.innerHTML = html;
-                
-                // Re-check after applying
-                setTimeout(checkSpanishGrammar, 500);
-            }
-        }
-        
-        // Apply all corrections at once
-        function applyAllCorrections() {
-            const content = document.getElementById('postContent');
-            let text = content.innerText;
-            
-            for (const [wrong, correct] of Object.entries(spanishCorrections)) {
-                const regex = new RegExp(`\\b${wrong}\\b`, 'gi');
-                text = text.replace(regex, correct);
-            }
-            
-            content.innerText = text;
-            checkSpanishGrammar();
-            updatePreview();
-        }
-        
-        // INITIALIZE THE REAL AI BRAIN - TRUE ARTIFICIAL INTELLIGENCE
-        const aiBrain = new AIBrain();
-        console.log('🧠 AI Brain initialized - This is REAL AI, not a dictionary!');
-        
-        // Also keep the corrector for backwards compatibility
-        const intelligentCorrector = new IntelligentWritingCorrector();
-        let correctionTimeout = null;
-        
-        // Real-time intelligent correction
-        document.getElementById('postContent').addEventListener('input', async (e) => {
-            const element = e.target;
-            const text = element.innerText || element.textContent || '';
-            
-            // Clear previous timeout
-            clearTimeout(correctionTimeout);
-            
-            // Update AI status
-            const indicator = document.getElementById('aiIndicator');
-            const status = document.getElementById('aiStatus');
-            if (indicator) indicator.classList.add('processing');
-            if (status) status.textContent = 'AI CORRECTOR: ANALYZING...';
-            
-            // Process with slight delay to avoid over-processing
-            correctionTimeout = setTimeout(async () => {
-                // Get cursor position before correction
-                const selection = window.getSelection();
-                const range = selection.getRangeAt(0);
-                const cursorPos = range.startOffset;
-                
-                // Use the REAL AI BRAIN to think about the text
-                const aiDecisions = await aiBrain.think(text, {
-                    cursorPosition: cursorPos,
-                    category: document.getElementById('postCategory').value,
-                    title: document.getElementById('postTitle').value
-                });
-                
-                // Also use the corrector for comparison
-                const result = await intelligentCorrector.analyzeAndCorrect(text, cursorPos);
-                
-                // Combine AI Brain decisions with corrector results
-                const smartCorrections = [];
-                aiDecisions.forEach(decision => {
-                    if (decision.action === 'correct') {
-                        smartCorrections.push({
-                            original: decision.target,
-                            corrected: decision.suggestion,
-                            confidence: decision.confidence,
-                            reason: decision.explanation
-                        });
-                    }
-                });
-                
-                // Merge corrections
-                const allCorrections = [...smartCorrections, ...result.corrections];
-                const uniqueCorrections = allCorrections.filter((c, i, arr) => 
-                    arr.findIndex(x => x.original === c.original) === i
-                );
-                
-                if (result.corrections.length > 0) {
-                    // Apply corrections intelligently
-                    intelligentCorrector.applyCorrectionsToElement(element, result.corrections);
-                    
-                    // Update status
-                    if (status) {
-                        status.textContent = `AI CORRECTOR: ${result.corrections.length} corrections (${result.language}) - ${Math.round(result.confidence * 100)}% confidence`;
-                    }
-                    
-                    // Display corrections in panel
-                    const correctionsList = document.getElementById('correctionsList');
-                    if (correctionsList) {
-                        correctionsList.innerHTML = result.corrections.map(c => `
-                            <div class="correction-item" title="${c.reason}">
-                                <span class="correction-original">${c.original}</span>
-                                <span class="correction-arrow">→</span>
-                                <span class="correction-suggested">${c.corrected}</span>
-                                <span style="font-size: 12px; color: var(--text-light);"> (${Math.round(c.confidence * 100)}%)</span>
-                            </div>
-                        `).join('');
-                        correctionsList.classList.add('has-corrections');
-                    }
-                } else {
-                    if (status) {
-                        status.textContent = `AI CORRECTOR: Perfect! (${result.language})`;
-                    }
-                    const correctionsList = document.getElementById('correctionsList');
-                    if (correctionsList) {
-                        correctionsList.innerHTML = '';
-                        correctionsList.classList.remove('has-corrections');
-                    }
-                }
-                
-                if (indicator) indicator.classList.remove('processing');
-                
-                // Update preview
-                updatePreview();
-            }, 300); // 300ms delay for better performance
-        });
-        
-        // Add keyboard shortcut for apply all corrections
-        document.addEventListener('keydown', (e) => {
-            if (e.ctrlKey && e.shiftKey && e.key === 'C') {
-                e.preventDefault();
-                applyAllCorrections();
-            }
-        });
-        
-        // AI Writing Assistant System
-        let userWritingStyle = {
-            averageSentenceLength: 0,
-            commonWords: {},
-            writingPatterns: [],
-            tone: 'neutral',
-            topics: [],
-            vocabulary: new Set(),
-            sentenceStarters: [],
-            phrasesUsed: {},
-            paragraphStructure: [],
-            punctuationStyle: {},
-            topicTransitions: [],
-            conclusionPatterns: [],
-            emotionalTone: 'balanced',
-            formalityLevel: 5,
-            creativityScore: 5,
-            technicalDepth: 5,
-            sentenceVariety: [],
-            metaphorUsage: [],
-            exampleTypes: [],
-            questionFrequency: 0,
-            exclamationFrequency: 0,
-            averageParagraphLength: 0,
-            topicProgression: [],
-            writingSpeed: [],
-            editingPatterns: [],
-            timeOfDayPreference: [],
-            categoryPreferences: {},
-            tagPatterns: [],
-            titleFormulas: [],
-            hookStrategies: [],
-            callToActionStyles: []
-        };
-        
-        // Load saved writing style
-        function loadWritingStyle() {
-            const saved = localStorage.getItem('userWritingStyle');
-            if (saved) {
-                const parsed = JSON.parse(saved);
-                userWritingStyle = {
-                    ...parsed,
-                    vocabulary: new Set(parsed.vocabulary || []),
-                    metaphorUsage: parsed.metaphorUsage || [],
-                    exampleTypes: parsed.exampleTypes || [],
-                    writingSpeed: parsed.writingSpeed || [],
-                    editingPatterns: parsed.editingPatterns || [],
-                    timeOfDayPreference: parsed.timeOfDayPreference || [],
-                    categoryPreferences: parsed.categoryPreferences || {},
-                    tagPatterns: parsed.tagPatterns || [],
-                    titleFormulas: parsed.titleFormulas || [],
-                    hookStrategies: parsed.hookStrategies || [],
-                    callToActionStyles: parsed.callToActionStyles || []
-                };
-            }
-            
-            // Initialize writing session tracking
-            userWritingStyle.currentSession = {
-                startTime: Date.now(),
-                keystrokes: 0,
-                deletions: 0,
-                pauses: [],
-                flowStates: []
-            };
-        }
-        
-        // Analyze and learn from user's writing
-        function analyzeWritingStyle() {
-            const content = document.getElementById('postContent').innerText || '';
-            const title = document.getElementById('postTitle').value || '';
-            const category = document.getElementById('postCategory').value;
-            const tags = document.getElementById('postTags').value;
-            
-            if (content.length < 50) return;
-            
-            // Track category preferences
-            if (category) {
-                userWritingStyle.categoryPreferences[category] = 
-                    (userWritingStyle.categoryPreferences[category] || 0) + 1;
-            }
-            
-            // Analyze title patterns
-            if (title) {
-                analyzeTitle(title);
-            }
-            
-            // Analyze tag patterns
-            if (tags) {
-                const tagList = tags.split(',').map(t => t.trim());
-                tagList.forEach(tag => {
-                    if (!userWritingStyle.tagPatterns.includes(tag)) {
-                        userWritingStyle.tagPatterns.push(tag);
-                    }
-                });
-            }
-            
-            // Analyze sentences with advanced metrics
-            const sentences = content.match(/[^.!?]+[.!?]+/g) || [];
-            if (sentences.length > 0) {
-                // Calculate sentence length variety
-                const sentenceLengths = sentences.map(s => s.trim().split(/\s+/).length);
-                const avgWords = sentenceLengths.reduce((sum, len) => sum + len, 0) / sentenceLengths.length;
-                userWritingStyle.averageSentenceLength = Math.round(avgWords);
-                
-                // Analyze sentence variety (standard deviation)
-                const variance = sentenceLengths.reduce((sum, len) => 
-                    sum + Math.pow(len - avgWords, 2), 0) / sentenceLengths.length;
-                userWritingStyle.sentenceVariety.push(Math.sqrt(variance));
-                
-                // Collect sentence patterns
-                sentences.forEach((sentence, index) => {
-                    const trimmed = sentence.trim();
-                    const words = trimmed.split(' ');
-                    
-                    // Sentence starters
-                    const starter = words.slice(0, 3).join(' ');
-                    if (starter.length > 5 && !userWritingStyle.sentenceStarters.includes(starter)) {
-                        userWritingStyle.sentenceStarters.push(starter);
-                    }
-                    
-                    // Conclusion patterns (last 3 sentences)
-                    if (index >= sentences.length - 3) {
-                        const pattern = detectSentencePattern(trimmed);
-                        if (pattern && !userWritingStyle.conclusionPatterns.includes(pattern)) {
-                            userWritingStyle.conclusionPatterns.push(pattern);
-                        }
-                    }
-                    
-                    // Question and exclamation frequency
-                    if (trimmed.endsWith('?')) userWritingStyle.questionFrequency++;
-                    if (trimmed.endsWith('!')) userWritingStyle.exclamationFrequency++;
-                    
-                    // Detect metaphors and examples
-                    if (trimmed.includes('como') || trimmed.includes('igual que')) {
-                        userWritingStyle.metaphorUsage.push(trimmed.substring(0, 50));
-                    }
-                    if (trimmed.includes('por ejemplo') || trimmed.includes('ejemplo')) {
-                        userWritingStyle.exampleTypes.push('explicit');
-                    }
-                });
-            }
-            
-            // Analyze paragraph structure
-            const paragraphs = content.split('\n\n').filter(p => p.trim());
-            if (paragraphs.length > 0) {
-                const avgParagraphWords = paragraphs.reduce((sum, p) => 
-                    sum + p.trim().split(/\s+/).length, 0) / paragraphs.length;
-                userWritingStyle.averageParagraphLength = Math.round(avgParagraphWords);
-                
-                // Analyze topic transitions
-                paragraphs.forEach((para, index) => {
-                    if (index > 0) {
-                        const firstSentence = para.match(/^[^.!?]+/)?.[0] || '';
-                        if (firstSentence.length > 10) {
-                            const transitionWords = detectTransitionWords(firstSentence);
-                            if (transitionWords) {
-                                userWritingStyle.topicTransitions.push(transitionWords);
-                            }
-                        }
-                    }
-                });
-            }
-            
-            // Analyze word frequency
-            const words = content.toLowerCase().split(/\s+/);
-            words.forEach(word => {
-                const cleanWord = word.replace(/[.,;:!?¿¡()[\]{}'"]/g, '');
-                if (cleanWord.length > 4) {
-                    userWritingStyle.commonWords[cleanWord] = (userWritingStyle.commonWords[cleanWord] || 0) + 1;
-                    userWritingStyle.vocabulary.add(cleanWord);
-                }
-            });
-            
-            // Advanced tone and style detection
-            const emotionalWords = {
-                positive: ['excelente', 'increíble', 'maravilloso', 'fantástico', 'genial', 'bueno', 'mejor', 'éxito', 'logro', 'feliz', 'alegría', 'amor', 'esperanza', 'oportunidad'],
-                negative: ['problema', 'difícil', 'malo', 'peor', 'error', 'fallo', 'nunca', 'no', 'tristeza', 'miedo', 'preocupación', 'fracaso', 'obstáculo'],
-                formal: ['considerar', 'mediante', 'asimismo', 'obstante', 'consecuencia', 'además', 'por consiguiente', 'no obstante', 'sin embargo', 'por lo tanto'],
-                informal: ['super', 'genial', 'cool', 'wow', 'ok', 'bueno', 'mira', 'oye', 'sabes'],
-                technical: ['algoritmo', 'sistema', 'proceso', 'método', 'función', 'parámetro', 'variable', 'implementar', 'desarrollar', 'optimizar'],
-                creative: ['imagina', 'soñar', 'crear', 'inventar', 'diseñar', 'inspirar', 'transformar', 'reinventar', 'visualizar']
-            };
-            
-            const wordCounts = {};
-            Object.keys(emotionalWords).forEach(category => {
-                wordCounts[category] = 0;
-                words.forEach(word => {
-                    if (emotionalWords[category].includes(word)) {
-                        wordCounts[category]++;
-                    }
-                });
-            });
-            
-            // Calculate emotional tone
-            const positiveRatio = wordCounts.positive / (words.length || 1);
-            const negativeRatio = wordCounts.negative / (words.length || 1);
-            if (positiveRatio > negativeRatio * 2) userWritingStyle.emotionalTone = 'OPTIMISTIC';
-            else if (negativeRatio > positiveRatio * 2) userWritingStyle.emotionalTone = 'CRITICAL';
-            else userWritingStyle.emotionalTone = 'BALANCED';
-            
-            // Calculate formality level (1-10)
-            const formalityScore = (wordCounts.formal * 2 - wordCounts.informal) / words.length * 100;
-            userWritingStyle.formalityLevel = Math.min(10, Math.max(1, Math.round(5 + formalityScore)));
-            
-            // Calculate creativity score (1-10)
-            const creativityScore = wordCounts.creative / words.length * 100;
-            userWritingStyle.creativityScore = Math.min(10, Math.max(1, Math.round(creativityScore * 10)));
-            
-            // Calculate technical depth (1-10)
-            const technicalScore = wordCounts.technical / words.length * 100;
-            userWritingStyle.technicalDepth = Math.min(10, Math.max(1, Math.round(technicalScore * 10)));
-            
-            // Determine primary tone
-            const maxCategory = Object.keys(wordCounts).reduce((a, b) => 
-                wordCounts[a] > wordCounts[b] ? a : b);
-            
-            if (wordCounts[maxCategory] > 5) {
-                userWritingStyle.tone = maxCategory.toUpperCase();
-            } else {
-                userWritingStyle.tone = 'NEUTRAL';
-            }
-            
-            // Save style
-            const toSave = {
-                ...userWritingStyle,
-                vocabulary: Array.from(userWritingStyle.vocabulary)
-            };
-            localStorage.setItem('userWritingStyle', JSON.stringify(toSave));
-            
-            // Update UI
-            updateStyleAnalysis();
-        }
-        
-        // Update style analysis UI
-        function updateStyleAnalysis() {
-            document.getElementById('styleType').textContent = userWritingStyle.tone;
-            document.getElementById('avgSentence').textContent = userWritingStyle.averageSentenceLength + ' WORDS';
-            document.getElementById('writingTone').textContent = userWritingStyle.tone;
-            
-            // Show favorite words
-            const topWords = Object.entries(userWritingStyle.commonWords)
-                .sort((a, b) => b[1] - a[1])
-                .slice(0, 8)
-                .map(([word]) => word);
-            
-            document.getElementById('favoriteWords').innerHTML = topWords.map(word => 
-                `<span class="word-chip">${word}</span>`
-            ).join('');
-        }
-        
-        // Helper functions for pattern detection
-        function detectSentencePattern(sentence) {
-            if (sentence.includes('En conclusión') || sentence.includes('Para terminar')) return 'conclusion-formal';
-            if (sentence.includes('¿') && sentence.includes('?')) return 'rhetorical-question';
-            if (sentence.includes('Recuerda')) return 'reminder';
-            if (sentence.includes('No olvides')) return 'call-to-action';
-            if (sentence.includes('En resumen')) return 'summary';
-            return null;
-        }
-        
-        function detectTransitionWords(text) {
-            const transitions = [
-                'Además', 'Por otro lado', 'Sin embargo', 'No obstante', 
-                'En primer lugar', 'En segundo lugar', 'Finalmente',
-                'Por ejemplo', 'Es decir', 'En otras palabras',
-                'Como resultado', 'Por lo tanto', 'En consecuencia'
-            ];
-            
-            for (const transition of transitions) {
-                if (text.includes(transition)) return transition;
-            }
-            return null;
-        }
-        
-        function analyzeTitle(title) {
-            // Detect title formulas
-            let formula = 'standard';
-            
-            if (title.includes('Cómo')) formula = 'how-to';
-            else if (title.includes('Por qué')) formula = 'why';
-            else if (title.includes('?')) formula = 'question';
-            else if (/\d+/.test(title)) formula = 'listicle';
-            else if (title.includes(':')) formula = 'two-part';
-            else if (title.includes('La guía')) formula = 'guide';
-            else if (title.includes('vs')) formula = 'comparison';
-            
-            if (!userWritingStyle.titleFormulas.includes(formula)) {
-                userWritingStyle.titleFormulas.push(formula);
-            }
-        }
-        
-        // Generate highly personalized content ideas
-        function generateIdeas() {
-            const category = document.getElementById('postCategory').value;
-            const currentTitle = document.getElementById('postTitle').value;
-            const currentContent = document.getElementById('postContent').innerText || '';
-            
-            const ideas = [];
-            
-            // Analyze current context for smarter suggestions
-            const context = {
-                category: category,
-                hasTitle: currentTitle.length > 0,
-                hasContent: currentContent.length > 50,
-                wordCount: currentContent.split(/\s+/).length,
-                timeOfDay: new Date().getHours(),
-                dayOfWeek: new Date().getDay(),
-                preferredCategories: Object.keys(userWritingStyle.categoryPreferences)
-                    .sort((a, b) => userWritingStyle.categoryPreferences[b] - userWritingStyle.categoryPreferences[a])
-                    .slice(0, 3)
-            };
-            
-            // Generate ideas based on user's writing patterns
-            if (userWritingStyle.titleFormulas.length > 0) {
-                const formulas = userWritingStyle.titleFormulas;
-                
-                if (formulas.includes('how-to')) {
-                    ideas.push(`Cómo ${getTopicBasedOnStyle()} en ${Math.floor(Math.random() * 5) + 3} pasos simples`);
-                }
-                if (formulas.includes('question')) {
-                    ideas.push(`¿${getQuestionBasedOnStyle()}?`);
-                }
-                if (formulas.includes('listicle')) {
-                    const num = Math.floor(Math.random() * 5) + 5;
-                    ideas.push(`${num} ${getListicleTopicBasedOnStyle()}`);
-                }
-                if (formulas.includes('comparison')) {
-                    ideas.push(`${getComparisonTopicBasedOnStyle()}`);
-                }
-            }
-            
-            // Time-based suggestions
-            if (context.timeOfDay >= 5 && context.timeOfDay < 12) {
-                ideas.push('Rutina matutina para ' + getProductivityTopic());
-            } else if (context.timeOfDay >= 20 || context.timeOfDay < 5) {
-                ideas.push('Reflexiones nocturnas: ' + getReflectiveTopic());
-            }
-            
-            // Style-based ideas
-            if (userWritingStyle.emotionalTone === 'OPTIMISTIC') {
-                ideas.push(
-                    'El lado positivo de ' + getCurrentChallenge(),
-                    'Celebrando pequeñas victorias en ' + getPersonalTopic()
-                );
-            } else if (userWritingStyle.emotionalTone === 'CRITICAL') {
-                ideas.push(
-                    'Análisis crítico de ' + getTrendingTopic(),
-                    'Lo que nadie te dice sobre ' + getControversialTopic()
-                );
-            }
-            
-            // Technical depth-based suggestions
-            if (userWritingStyle.technicalDepth > 7) {
-                ideas.push(
-                    'Deep dive técnico: ' + getTechnicalTopic(),
-                    'Arquitectura y diseño de ' + getSystemTopic()
-                );
-            } else if (userWritingStyle.technicalDepth < 4) {
-                ideas.push(
-                    'Explicado de forma simple: ' + getComplexTopicSimplified(),
-                    'Guía para principiantes: ' + getBeginnerTopic()
-                );
-            }
-            
-            // Category-based personalized ideas
-            const categoryIdeas = {
-                'ai': [
-                    'Cómo la IA está transformando nuestra forma de escribir',
-                    'El futuro de la creatividad: Humanos y máquinas trabajando juntos',
-                    'Herramientas de IA que todo creador debe conocer'
-                ],
-                'programming': [
-                    'Los errores más comunes al aprender a programar',
-                    'El lenguaje que cambiará tu forma de pensar',
-                    'De idea a código: Cómo estructurar tu proyecto'
-                ],
-                'productivity': [
-                    'El método minimalista para maximizar productividad',
-                    'Herramientas digitales vs analógicas',
-                    'Cómo crear un sistema personalizado'
-                ],
-                'business': [
-                    'Lecciones que no enseñan en la universidad',
-                    'Validar tu idea sin gastar dinero',
-                    'Construyendo un negocio sostenible'
-                ],
-                'life': [
-                    'Desconectar en un mundo hiperconectado',
-                    'Encontrar propósito en la incertidumbre',
-                    'El equilibrio entre ambición y bienestar'
-                ]
-            };
-            
-            if (category && categoryIdeas[category]) {
-                ideas.push(...categoryIdeas[category]);
-            } else {
-                // Generic ideas based on user's style
-                if (userWritingStyle.tone === 'FORMAL') {
-                    ideas.push(
-                        'Análisis comparativo de metodologías contemporáneas',
-                        'Consideraciones sobre el impacto tecnológico en la sociedad',
-                        'Perspectivas futuras en el desarrollo profesional'
-                    );
-                } else if (userWritingStyle.tone === 'OPTIMISTIC') {
-                    ideas.push(
-                        'Cómo convertir obstáculos en oportunidades',
-                        'El poder de la mentalidad positiva en el trabajo',
-                        'Celebrando pequeñas victorias diarias'
-                    );
-                } else {
-                    ideas.push(
-                        'Reflexiones sobre el mundo digital actual',
-                        'Compartiendo experiencias y aprendizajes',
-                        'Ideas para mejorar nuestro entorno'
-                    );
-                }
-            }
-            
-            // Advanced continuation suggestions based on writing history
-            if (userWritingStyle.sentenceStarters.length > 0) {
-                const recentStarter = userWritingStyle.sentenceStarters[userWritingStyle.sentenceStarters.length - 1];
-                ideas.push('Expandiendo sobre: "' + recentStarter + '..."');
-            }
-            
-            if (userWritingStyle.metaphorUsage.length > 0) {
-                const recentMetaphor = userWritingStyle.metaphorUsage[userWritingStyle.metaphorUsage.length - 1];
-                ideas.push('Desarrollando la analogía: ' + recentMetaphor.substring(0, 30) + '...');
-            }
-            
-            // Add continuation ideas if user has partial content
-            if (currentContent.length > 100) {
-                ideas.push(
-                    'Siguiente sección: Casos prácticos y ejemplos',
-                    'Añadir: Mi experiencia personal con este tema',
-                    'Desarrollar: Consejos actionables para los lectores'
-                );
-            }
-            
-            // Display ideas
-            document.getElementById('ideaSuggestions').innerHTML = ideas.map((idea, i) => 
-                `<div class="idea-item" onclick="useIdea('${idea.replace(/'/g, "\\'")}')">${i + 1}. ${idea}</div>`
-            ).join('');
-        }
-        
-        // Use selected idea
-        function useIdea(idea) {
-            document.getElementById('postTitle').value = idea;
-            updatePreview();
-        }
-        
-        // Improve writing to match user's style
-        function improveStyle() {
-            const content = document.getElementById('postContent').innerText;
-            if (!content) return;
-            
-            // Apply style improvements
-            let improved = content;
-            
-            // Match average sentence length
-            if (userWritingStyle.averageSentenceLength > 0) {
-                // This is simplified - in real implementation would be more sophisticated
-                const sentences = improved.match(/[^.!?]+[.!?]+/g) || [];
-                const currentAvg = sentences.reduce((sum, s) => sum + s.trim().split(/\s+/).length, 0) / sentences.length;
-                
-                if (currentAvg > userWritingStyle.averageSentenceLength + 5) {
-                    alert(`Tus oraciones son más largas de lo usual (${Math.round(currentAvg)} palabras vs. tu promedio de ${userWritingStyle.averageSentenceLength}). Considera dividirlas.`);
-                }
-            }
-            
-            // Suggest vocabulary from user's common words
-            const suggestions = Object.keys(userWritingStyle.commonWords)
-                .filter(word => !content.toLowerCase().includes(word))
-                .slice(0, 5);
-            
-            if (suggestions.length > 0) {
-                alert(`Palabras que sueles usar: ${suggestions.join(', ')}`);
-            }
-        }
-        
-        // Helper functions for idea generation
-        function getTopicBasedOnStyle() {
-            const topics = {
-                'TECHNICAL': ['optimizar tu código', 'implementar microservicios', 'mejorar el rendimiento'],
-                'CREATIVE': ['despertar tu creatividad', 'encontrar inspiración', 'desarrollar tu estilo único'],
-                'FORMAL': ['gestionar proyectos eficientemente', 'liderar equipos remotos', 'presentar propuestas'],
-                'INFORMAL': ['hackear tu productividad', 'simplificar tu vida digital', 'automatizar tareas aburridas']
-            };
-            const styleTopic = topics[userWritingStyle.tone] || topics['CREATIVE'];
-            return styleTopic[Math.floor(Math.random() * styleTopic.length)];
-        }
-        
-        function getQuestionBasedOnStyle() {
-            const questions = [
-                'Por qué ' + getTopicBasedOnStyle() + ' es más importante que nunca',
-                'Estás cometiendo estos errores al ' + getTopicBasedOnStyle(),
-                'Qué pasaría si pudieras ' + getTopicBasedOnStyle() + ' en la mitad del tiempo'
-            ];
-            return questions[Math.floor(Math.random() * questions.length)];
-        }
-        
-        function getListicleTopicBasedOnStyle() {
-            const topics = [
-                'herramientas que transformarán tu flujo de trabajo',
-                'lecciones que aprendí este año',
-                'errores que todos cometemos',
-                'hábitos de personas altamente efectivas',
-                'tendencias que definirán el futuro'
-            ];
-            return topics[Math.floor(Math.random() * topics.length)];
-        }
-        
-        function getComparisonTopicBasedOnStyle() {
-            const comparisons = [
-                'Método tradicional vs. Enfoque moderno: ¿Cuál elegir?',
-                'Herramientas gratuitas vs. De pago: Análisis completo',
-                'Trabajo remoto vs. Presencial: Mi experiencia',
-                'Aprender solo vs. Con mentor: Pros y contras'
-            ];
-            return comparisons[Math.floor(Math.random() * comparisons.length)];
-        }
-        
-        function getProductivityTopic() {
-            const topics = ['maximizar tu energía', 'comenzar el día con foco', 'establecer prioridades claras'];
-            return topics[Math.floor(Math.random() * topics.length)];
-        }
-        
-        function getReflectiveTopic() {
-            const topics = ['Lo que aprendí hoy', 'Lecciones del día', 'Pensamientos sobre el futuro'];
-            return topics[Math.floor(Math.random() * topics.length)];
-        }
-        
-        function getCurrentChallenge() {
-            const challenges = ['los desafíos actuales', 'la incertidumbre', 'los cambios tecnológicos'];
-            return challenges[Math.floor(Math.random() * challenges.length)];
-        }
-        
-        function getPersonalTopic() {
-            const topics = ['el desarrollo personal', 'el crecimiento profesional', 'el aprendizaje continuo'];
-            return topics[Math.floor(Math.random() * topics.length)];
-        }
-        
-        function getTrendingTopic() {
-            const topics = ['las tendencias actuales', 'las nuevas tecnologías', 'los métodos populares'];
-            return topics[Math.floor(Math.random() * topics.length)];
-        }
-        
-        function getControversialTopic() {
-            const topics = ['el trabajo remoto', 'la inteligencia artificial', 'las redes sociales'];
-            return topics[Math.floor(Math.random() * topics.length)];
-        }
-        
-        function getTechnicalTopic() {
-            const topics = ['Arquitectura de sistemas distribuidos', 'Optimización de algoritmos', 'Patrones de diseño avanzados'];
-            return topics[Math.floor(Math.random() * topics.length)];
-        }
-        
-        function getSystemTopic() {
-            const topics = ['sistemas escalables', 'aplicaciones modernas', 'infraestructura cloud'];
-            return topics[Math.floor(Math.random() * topics.length)];
-        }
-        
-        function getComplexTopicSimplified() {
-            const topics = ['Machine Learning', 'Blockchain', 'Computación cuántica'];
-            return topics[Math.floor(Math.random() * topics.length)];
-        }
-        
-        function getBeginnerTopic() {
-            const topics = ['Primeros pasos en programación', 'Introducción al diseño web', 'Fundamentos de productividad'];
-            return topics[Math.floor(Math.random() * topics.length)];
-        }
-        
-        // Enhanced AI Chat functionality with context awareness
-        const aiResponses = {
-            'ayuda': function() {
-                const hour = new Date().getHours();
-                const greeting = hour < 12 ? 'Buenos días' : hour < 19 ? 'Buenas tardes' : 'Buenas noches';
-                return `${greeting}! Basándome en tu estilo ${userWritingStyle.tone.toLowerCase()}, puedo ayudarte con:\n- Ideas personalizadas para tu blog\n- Correcciones de español en tiempo real\n- Análisis de tu estilo único\n- Sugerencias para mejorar el engagement\n¿Qué necesitas hoy?`;
-            },
-            'idea': function() {
-                const preferredCat = Object.keys(userWritingStyle.categoryPreferences)[0];
-                const avgLength = userWritingStyle.averageSentenceLength;
-                return `Analizando tu estilo:\n- Prefieres escribir sobre ${preferredCat || 'temas variados'}\n- Tu promedio es de ${avgLength} palabras por oración\n- Tu tono es ${userWritingStyle.emotionalTone.toLowerCase()}\n\nTe sugiero: "${getTopicBasedOnStyle()}"\n¿Te gustaría que desarrolle más esta idea?`;
-            },
-            'mejorar': function() {
-                const tips = [];
-                
-                if (userWritingStyle.averageSentenceLength > 20) {
-                    tips.push('Tus oraciones son largas. Considera dividirlas para mayor claridad');
-                }
-                if (userWritingStyle.questionFrequency < 2) {
-                    tips.push('Añade más preguntas para involucrar al lector');
-                }
-                if (userWritingStyle.metaphorUsage.length < 2) {
-                    tips.push('Usa más analogías y metáforas para explicar conceptos');
-                }
-                if (userWritingStyle.averageParagraphLength > 150) {
-                    tips.push('Divide los párrafos largos para mejorar la legibilidad');
-                }
-                
-                if (tips.length === 0) {
-                    tips.push('Tu estilo está bien desarrollado. Sigue manteniendo tu voz única');
-                }
-                
-                return 'Sugerencias personalizadas para ti:\n' + tips.map((tip, i) => `${i + 1}. ${tip}`).join('\n');
-            },
-            'titulo': function() {
-                const formulas = userWritingStyle.titleFormulas;
-                let suggestion = 'Basándome en tus títulos anteriores, prefieres: ';
-                
-                if (formulas.includes('how-to')) suggestion += 'guías prácticas (Cómo...). ';
-                if (formulas.includes('question')) suggestion += 'preguntas provocativas. ';
-                if (formulas.includes('listicle')) suggestion += 'listas numeradas. ';
-                
-                suggestion += '\n\nPrueba este formato: ';
-                const currentContent = document.getElementById('postContent').innerText;
-                if (currentContent.length > 100) {
-                    const topic = currentContent.substring(0, 50).replace(/[^a-zA-ZáéíóúñÑ\s]/g, '');
-                    suggestion += `"${generateSmartTitle(topic)}"`;;
-                } else {
-                    suggestion += '"[Número] [Adjetivo] [Tema] para [Beneficio]"';
-                }
-                
-                return suggestion;
-            },
-            'seo': function() {
-                const content = document.getElementById('postContent').innerText || '';
-                const title = document.getElementById('postTitle').value || '';
-                const seoScore = calculateSEOScore(title, content);
-                
-                return `Análisis SEO de tu contenido:\n\nPuntuación: ${seoScore}/100\n\nRecomendaciones:\n${getSEORecommendations(title, content).join('\n')}`;
-            },
-            'estructura': function() {
-                return `Para tu categoría favorita (${Object.keys(userWritingStyle.categoryPreferences)[0] || 'general'}), sugiero:\n\n1. Hook inicial (pregunta o estadística)\n2. Contexto del problema (2-3 párrafos)\n3. Tu solución/perspectiva (3-4 párrafos)\n4. Ejemplos prácticos (2-3 casos)\n5. Conclusión con CTA\n\n¿Quieres que desarrolle alguna sección?`;
-            },
-            
-            'hook': function() {
-                const hooks = [
-                    'Pregunta provocativa: ¿Qué pasaría si...?',
-                    'Estadística impactante: El 87% de...',
-                    'Historia personal: Hace un año, yo...',
-                    'Afirmación controversial: Todos están equivocados sobre...',
-                    'Promesa de valor: En 5 minutos aprenderás...'
-                ];
-                return 'Tipos de hooks que funcionan:\n\n' + hooks.join('\n') + '\n\n¿Cuál resuena más con tu estilo?';
-            },
-            
-            default: function() {
-                const suggestions = [
-                    'Prueba preguntando sobre: ideas, estructura, hook, título, SEO',
-                    'Puedo analizar tu estilo actual y darte feedback personalizado',
-                    'También puedo ayudarte con transiciones entre párrafos',
-                    'O sugerir cómo cerrar tu artículo con impacto'
-                ];
-                return 'Aquí estoy para ayudarte. ' + suggestions[Math.floor(Math.random() * suggestions.length)];
-            }
-        };
-        
-        // Helper function to generate smart titles
-        function generateSmartTitle(topic) {
-            const templates = [
-                `Cómo ${topic} cambió mi perspectiva`,
-                `La verdad sobre ${topic} que nadie cuenta`,
-                `${topic}: Lo que aprendí en ${new Date().getFullYear()}`,
-                `Por qué ${topic} es más importante de lo que crees`
-            ];
-            return templates[Math.floor(Math.random() * templates.length)];
-        }
-        
-        // SEO analysis functions
-        function calculateSEOScore(title, content) {
-            let score = 0;
-            
-            // Title checks
-            if (title.length > 10 && title.length < 60) score += 20;
-            if (title.includes('Cómo') || title.includes('Por qué') || title.includes('Qué')) score += 10;
-            
-            // Content checks
-            const wordCount = content.split(/\s+/).length;
-            if (wordCount > 300) score += 20;
-            if (wordCount > 600) score += 10;
-            
-            // Structure checks
-            if (content.includes('<h2>') || content.includes('<h3>')) score += 15;
-            if (content.includes('<ul>') || content.includes('<ol>')) score += 10;
-            
-            // Readability
-            const avgSentenceLength = userWritingStyle.averageSentenceLength || 15;
-            if (avgSentenceLength < 20) score += 15;
-            
-            return Math.min(100, score);
-        }
-        
-        function getSEORecommendations(title, content) {
-            const recommendations = [];
-            const wordCount = content.split(/\s+/).length;
-            
-            if (!title) recommendations.push('- Añade un título atractivo');
-            if (title.length > 60) recommendations.push('- Acorta el título (máx 60 caracteres)');
-            if (wordCount < 300) recommendations.push(`- Añade más contenido (tienes ${wordCount} palabras, mínimo 300)`);
-            if (!content.includes('<h')) recommendations.push('- Añade subtítulos para mejorar la estructura');
-            if (!content.includes('?')) recommendations.push('- Incluye preguntas para aumentar engagement');
-            
-            if (recommendations.length === 0) {
-                recommendations.push('✓ Tu contenido está bien optimizado para SEO');
-            }
-            
-            return recommendations;
-        }
-        
-        // Enhanced chat message handling
-        function sendChatMessage() {
-            const input = document.getElementById('chatInput');
-            const message = input.value.trim();
-            if (!message) return;
-            
-            const chat = document.getElementById('aiChat');
-            
-            // Add user message
-            chat.innerHTML += `
-                <div class="chat-message user">
-                    <span class="chat-author">TÚ:</span>
-                    <span class="chat-text">${message}</span>
-                </div>
-            `;
-            
-            // Generate AI response based on context and patterns
-            const lowerMessage = message.toLowerCase();
-            let response = '';
-            let foundKeyword = false;
-            
-            for (const [keyword, aiResponse] of Object.entries(aiResponses)) {
-                if (lowerMessage.includes(keyword)) {
-                    response = typeof aiResponse === 'function' ? aiResponse() : aiResponse;
-                    foundKeyword = true;
-                    break;
-                }
-            }
-            
-            if (!foundKeyword) {
-                // Use context-aware default response
-                response = aiResponses.default();
-            }
-            
-            // Track user questions for learning
-            if (!userWritingStyle.userQuestions) {
-                userWritingStyle.userQuestions = [];
-            }
-            userWritingStyle.userQuestions.push({
-                question: message,
-                timestamp: Date.now(),
-                category: document.getElementById('postCategory').value
-            });
-            
-            // Add AI response with typing effect
             setTimeout(() => {
-                chat.innerHTML += `
-                    <div class="chat-message assistant">
-                        <span class="chat-author">AI:</span>
-                        <span class="chat-text">${response}</span>
-                    </div>
-                `;
-                chat.scrollTop = chat.scrollHeight;
-                
-                // Save interaction for learning
-                saveWritingStyle();
-            }, 300 + Math.random() * 700); // Variable delay for more natural feel
-            
-            input.value = '';
-            chat.scrollTop = chat.scrollHeight;
+                status.classList.remove('show');
+            }, 3000);
         }
-        
-        // Save writing style with all enhancements
-        function saveWritingStyle() {
-            const toSave = {
-                ...userWritingStyle,
-                vocabulary: Array.from(userWritingStyle.vocabulary),
-                lastUpdated: Date.now()
-            };
-            localStorage.setItem('userWritingStyle', JSON.stringify(toSave));
+
+        function logout() {
+            sessionStorage.removeItem('isAdminAuth');
+            window.location.href = '/';
         }
-        
-        // Toggle assistant panel
-        function toggleAssistant() {
-            const content = document.getElementById('aiAssistantContent');
-            const toggle = document.querySelector('.assistant-toggle');
-            
-            content.classList.toggle('hidden');
-            toggle.classList.toggle('collapsed');
-        }
-        
-        // Switch assistant tabs
-        function switchAssistantTab(tabName) {
-            // Update tab buttons
-            document.querySelectorAll('.assistant-tab').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            // Update tab content
-            document.querySelectorAll('.assistant-tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            document.getElementById(tabName + 'Tab').classList.add('active');
-            
-            // Initialize tab content
-            if (tabName === 'style') {
-                analyzeWritingStyle();
-            } else if (tabName === 'ideas') {
-                if (document.getElementById('ideaSuggestions').children.length === 1) {
-                    generateIdeas();
-                }
-            }
-        }
-        
-        // Enhanced writing tracking with pattern recognition
-        let lastKeystrokeTime = Date.now();
-        let pauseDetectionTimer = null;
-        
-        document.getElementById('postContent').addEventListener('input', (e) => {
-            const currentTime = Date.now();
-            const timeSinceLastKey = currentTime - lastKeystrokeTime;
-            
-            // Track typing speed and patterns
-            if (userWritingStyle.currentSession) {
-                userWritingStyle.currentSession.keystrokes++;
+
+        // Load draft if exists
+        const draft = sessionStorage.getItem('postDraft');
+        if (draft) {
+            const draftData = JSON.parse(draft);
+            if (confirm('Hay un borrador guardado. ¿Quieres cargarlo?')) {
+                document.getElementById('postTitle').value = draftData.title || '';
+                document.getElementById('postDescription').value = draftData.description || '';
+                document.getElementById('postContent').value = draftData.content || '';
+                // Set category
+                const categoryValue = draftData.category || 'technology';
+                document.getElementById('postCategory').value = categoryValue;
                 
-                // Detect pauses (more than 3 seconds)
-                if (timeSinceLastKey > 3000) {
-                    userWritingStyle.currentSession.pauses.push({
-                        duration: timeSinceLastKey,
-                        position: e.target.innerText.length
-                    });
-                }
-                
-                // Detect flow state (consistent typing for more than 30 seconds)
-                clearTimeout(pauseDetectionTimer);
-                pauseDetectionTimer = setTimeout(() => {
-                    if (userWritingStyle.currentSession.keystrokes > 100) {
-                        userWritingStyle.currentSession.flowStates.push({
-                            timestamp: currentTime,
-                            duration: currentTime - userWritingStyle.currentSession.startTime
-                        });
-                    }
-                }, 30000);
-            }
-            
-            lastKeystrokeTime = currentTime;
-            
-            // Analyze style periodically
-            clearTimeout(window.styleAnalysisTimeout);
-            window.styleAnalysisTimeout = setTimeout(() => {
-                analyzeWritingStyle();
-                updateStyleAnalysis();
-                saveWritingStyle();
-            }, 15000); // Analyze every 15 seconds for better learning
-        });
-        
-        // Track deletions for editing patterns
-        document.getElementById('postContent').addEventListener('keydown', (e) => {
-            if (e.key === 'Backspace' || e.key === 'Delete') {
-                if (userWritingStyle.currentSession) {
-                    userWritingStyle.currentSession.deletions++;
-                }
-            }
-        });
-        
-        // Track time of day preferences
-        window.addEventListener('beforeunload', () => {
-            const hour = new Date().getHours();
-            if (!userWritingStyle.timeOfDayPreference[hour]) {
-                userWritingStyle.timeOfDayPreference[hour] = 0;
-            }
-            userWritingStyle.timeOfDayPreference[hour]++;
-            saveWritingStyle();
-        });
-        
-        // Advanced AI Integration with Multiple Free APIs
-        class AIAssistant {
-            constructor() {
-                // Multiple AI providers for redundancy
-                // Use working free AI providers
-                this.providers = [
-                    {
-                        name: 'DeepInfra',
-                        endpoint: 'https://api.deepinfra.com/v1/openai/chat/completions',
-                        apiKey: 'free-tier',
-                        model: 'meta-llama/Llama-2-70b-chat-hf',
-                        active: true
-                    }
-                ];
-                
-                this.currentProvider = 0;
-                this.temperature = 0.7;
-                this.maxTokens = 500;
-                this.conversationHistory = [];
-                this.userProfile = this.loadUserProfile();
-                this.knowledgeBase = this.initializeKnowledgeBase();
-                
-                // Test providers on startup
-                this.testProviders();
-            }
-            
-            async testProviders() {
-                // Skip API testing for now
-                console.log('AI running in offline mode');
-            }
-            
-            async makeAPICall(provider, prompt, messages) {
-                if (provider.name === 'Cohere') {
-                    const response = await fetch(provider.endpoint, {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${provider.apiKey}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            prompt: prompt,
-                            model: provider.model,
-                            max_tokens: this.maxTokens,
-                            temperature: this.temperature,
-                            return_likelihoods: 'NONE'
-                        })
-                    });
-                    if (response.ok) {
-                        const data = await response.json();
-                        return data.generations?.[0]?.text || null;
-                    }
-                } else if (provider.name === 'HuggingFace') {
-                    const response = await fetch(provider.endpoint, {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${provider.apiKey}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            inputs: prompt,
-                            parameters: {
-                                max_new_tokens: this.maxTokens,
-                                temperature: this.temperature,
-                                return_full_text: false
-                            }
-                        })
-                    });
-                    if (response.ok) {
-                        const data = await response.json();
-                        return data[0]?.generated_text || null;
-                    }
-                } else if (provider.name === 'Together') {
-                    const response = await fetch(provider.endpoint, {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${provider.apiKey}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            model: provider.model,
-                            messages: messages,
-                            temperature: this.temperature,
-                            max_tokens: this.maxTokens
-                        })
-                    });
-                    if (response.ok) {
-                        const data = await response.json();
-                        return data.choices?.[0]?.message?.content || null;
-                    }
-                }
-                return null;
-            }
-            
-            loadUserProfile() {
-                return {
-                    writingHistory: JSON.parse(localStorage.getItem('userWritingHistory') || '[]'),
-                    preferences: JSON.parse(localStorage.getItem('userPreferences') || '{}'),
-                    vocabulary: new Set(JSON.parse(localStorage.getItem('userVocabulary') || '[]')),
-                    topics: JSON.parse(localStorage.getItem('userTopics') || '[]')
-                };
-            }
-            
-            initializeKnowledgeBase() {
-                return {
-                    patterns: {
-                        greeting: /^(hola|hey|buenas|saludos|qué tal)/i,
-                        question: /(\?|cómo|qué|cuál|dónde|cuándo|por qué|para qué)/i,
-                        request: /(ayuda|necesito|quiero|puedes|podrías|me gustaría)/i,
-                        feedback: /(bien|mal|excelente|horrible|mejor|peor)/i,
-                        topic: /(idea|título|estructura|estilo|gramática|seo|contenido)/i
-                    },
-                    concepts: new Map(),
-                    relationships: new Map()
-                };
-            }
-            
-            async generateResponse(prompt, context = {}) {
-                // Add to conversation history
-                this.conversationHistory.push({ role: 'user', content: prompt, timestamp: Date.now() });
-                
-                // Analyze intent and context
-                const intent = this.analyzeIntent(prompt);
-                const enrichedContext = this.enrichContext(context, intent);
-                
-                // Use the intelligent offline system - it's actually quite good!
-                const response = this.generateIntelligentResponse(prompt, intent, enrichedContext);
-                
-                // Add some delay to feel more natural
-                await new Promise(resolve => setTimeout(resolve, 300));
-                
-                return response;
-            }
-            
-            analyzeIntent(prompt) {
-                const lower = prompt.toLowerCase();
-                const intent = {
-                    type: 'general',
-                    confidence: 0,
-                    entities: [],
-                    sentiment: 'neutral',
-                    urgency: 'normal',
-                    language: this.detectLanguage(prompt)
-                };
-                
-                // Pattern matching for intent detection
-                for (const [key, pattern] of Object.entries(this.knowledgeBase.patterns)) {
-                    if (pattern.test(lower)) {
-                        intent.type = key;
-                        intent.confidence = 0.8;
-                        break;
-                    }
-                }
-                
-                // Extract entities (topics, keywords)
-                const entities = this.extractEntities(prompt);
-                intent.entities = entities;
-                
-                // Sentiment analysis
-                intent.sentiment = this.analyzeSentiment(prompt);
-                
-                // Urgency detection
-                if (lower.includes('urgente') || lower.includes('ahora') || lower.includes('rápido')) {
-                    intent.urgency = 'high';
-                }
-                
-                return intent;
-            }
-            
-            extractEntities(text) {
-                const entities = [];
-                const keywords = ['título', 'idea', 'estructura', 'estilo', 'gramática', 'seo', 'contenido', 
-                                 'párrafo', 'introducción', 'conclusión', 'ejemplo', 'metáfora'];
-                
-                keywords.forEach(keyword => {
-                    if (text.toLowerCase().includes(keyword)) {
-                        entities.push({ type: 'topic', value: keyword });
+                // Update visual selector
+                document.querySelectorAll('.category-option').forEach(opt => {
+                    opt.classList.remove('active');
+                    if (opt.dataset.value === categoryValue) {
+                        opt.classList.add('active');
                     }
                 });
-                
-                // Extract numbers
-                const numbers = text.match(/\d+/g);
-                if (numbers) {
-                    numbers.forEach(num => entities.push({ type: 'number', value: num }));
-                }
-                
-                return entities;
             }
-            
-            analyzeSentiment(text) {
-                const positive = ['bien', 'excelente', 'perfecto', 'genial', 'increíble', 'feliz', 'contento'];
-                const negative = ['mal', 'horrible', 'terrible', 'problema', 'error', 'frustrado', 'confundido'];
-                
-                let score = 0;
-                const lower = text.toLowerCase();
-                
-                positive.forEach(word => { if (lower.includes(word)) score++; });
-                negative.forEach(word => { if (lower.includes(word)) score--; });
-                
-                if (score > 0) return 'positive';
-                if (score < 0) return 'negative';
-                return 'neutral';
-            }
-            
-            detectLanguage(text) {
-                const spanishIndicators = ['qué', 'cómo', 'está', 'ñ', 'á', 'é', 'í', 'ó', 'ú'];
-                const hasSpanish = spanishIndicators.some(indicator => text.includes(indicator));
-                return hasSpanish ? 'es' : 'en';
-            }
-            
-            enrichContext(context, intent) {
-                return {
-                    ...context,
-                    intent: intent,
-                    timestamp: Date.now(),
-                    sessionLength: this.conversationHistory.length,
-                    userProfile: this.userProfile,
-                    currentWriting: {
-                        wordCount: (context.content || '').split(/\s+/).length,
-                        hasTitle: (context.title || '').length > 0,
-                        category: context.category || 'general'
-                    }
-                };
-            }
-            
-            buildSystemPrompt(context) {
-                const style = context.style || {};
-                const intent = context.intent || {};
-                
-                return `Eres un asistente de escritura inteligente y experto en español.
-                
-                CONTEXTO DEL USUARIO:
-                - Tono preferido: ${style.tone || 'neutral'}
-                - Longitud promedio de oraciones: ${style.averageSentenceLength || 15} palabras
-                - Nivel de formalidad: ${style.formalityLevel || 5}/10
-                - Está escribiendo sobre: ${context.currentWriting.category}
-                - Palabras actuales: ${context.currentWriting.wordCount}
-                
-                INTENCIÓN DETECTADA:
-                - Tipo: ${intent.type}
-                - Sentimiento: ${intent.sentiment}
-                - Urgencia: ${intent.urgency}
-                
-                INSTRUCCIONES:
-                1. Responde de manera personalizada y contextual
-                2. Adapta tu tono al estilo del usuario
-                3. Proporciona ejemplos específicos y accionables
-                4. Si detectas errores, corrígelos sutilmente
-                5. Sugiere mejoras basadas en el contexto actual
-                6. Mantén coherencia con la conversación previa
-                
-                Responde en español de manera natural y útil.`;
-            }
-            
-            adjustTemperature(intent) {
-                // Adjust creativity based on intent
-                if (intent.type === 'greeting' || intent.type === 'feedback') return 0.3;
-                if (intent.type === 'question') return 0.5;
-                if (intent.entities.some(e => e.value === 'idea' || e.value === 'creatividad')) return 0.9;
-                return 0.7;
-            }
-            
-            generateIntelligentResponse(prompt, intent, context) {
-                // Dynamic response generation based on NLP analysis
-                const responses = this.buildResponseStrategy(intent, context);
-                
-                // Combine multiple response strategies
-                let response = '';
-                
-                // Add greeting if appropriate
-                if (intent.type === 'greeting') {
-                    response += this.generateGreeting(context) + '\n\n';
-                }
-                
-                // Main response based on intent
-                response += this.generateMainResponse(prompt, intent, context);
-                
-                // Add suggestions if relevant
-                if (context.currentWriting.wordCount > 0) {
-                    response += '\n\n' + this.generateContextualSuggestions(context);
-                }
-                
-                // Learn and save
-                this.learnFromInteraction(prompt, response, intent);
-                this.conversationHistory.push({ role: 'assistant', content: response, timestamp: Date.now() });
-                
-                return response;
-            }
-            
-            buildResponseStrategy(intent, context) {
-                const strategies = [];
-                
-                if (intent.type === 'question') strategies.push('answer');
-                if (intent.type === 'request') strategies.push('help');
-                if (intent.type === 'topic') strategies.push('explore');
-                if (intent.sentiment === 'negative') strategies.push('support');
-                if (context.currentWriting.wordCount === 0) strategies.push('inspire');
-                
-                return strategies;
-            }
-            
-            generateGreeting(context) {
-                const hour = new Date().getHours();
-                const timeGreeting = hour < 12 ? 'Buenos días' : hour < 19 ? 'Buenas tardes' : 'Buenas noches';
-                const personalTouch = context.sessionLength > 0 ? ', qué bueno verte de nuevo' : '';
-                return `${timeGreeting}${personalTouch}! Estoy aquí para ayudarte con tu escritura.`;
-            }
-            
-            generateMainResponse(prompt, intent, context) {
-                const lower = prompt.toLowerCase();
-                
-                // Use NLP to generate contextual response
-                if (intent.entities.some(e => e.value === 'idea')) {
-                    return this.generateDynamicIdeas(context);
-                }
-                
-                if (intent.entities.some(e => e.value === 'título')) {
-                    return this.generateSmartTitles(context);
-                }
-                
-                if (intent.entities.some(e => e.value === 'estructura')) {
-                    return this.generateStructureAdvice(context);
-                }
-                
-                if (intent.entities.some(e => e.value === 'gramática')) {
-                    return this.analyzeGrammar(context.content || prompt);
-                }
-                
-                // Default intelligent response
-                return this.generateContextAwareResponse(prompt, context);
-            }
-            
-            generateDynamicIdeas(context) {
-                const category = context.currentWriting.category;
-                const wordCount = context.currentWriting.wordCount;
-                const ideas = [];
-                
-                // Generate ideas based on multiple factors
-                const trends = this.getCurrentTrends(category);
-                const userInterests = this.analyzeUserInterests();
-                const gaps = this.identifyContentGaps(context);
-                
-                // Combine different idea sources
-                if (trends.length > 0) {
-                    ideas.push(`Tendencia actual: ${trends[0]}`);
-                }
-                
-                if (userInterests.length > 0) {
-                    ideas.push(`Basado en tu historial: ${this.personalizeIdea(userInterests[0])}`);
-                }
-                
-                if (gaps.length > 0) {
-                    ideas.push(`Área por explorar: ${gaps[0]}`);
-                }
-                
-                // Generate creative combinations
-                ideas.push(this.generateCreativeIdea(category));
-                ideas.push(this.generateControversialIdea(category));
-                
-                return `Ideas personalizadas para ti:\n\n${ideas.map((idea, i) => 
-                    `${i+1}. ${idea}`).join('\n')}\n\n¿Cuál resuena más contigo?`;
-            }
-            
-            generateSmartTitles(context) {
-                const content = context.content || '';
-                const category = context.currentWriting.category;
-                
-                // Analyze content to extract key themes
-                const themes = this.extractThemes(content);
-                const emotion = this.detectEmotion(content);
-                const hook = this.identifyHook(content);
-                
-                const titles = [];
-                
-                // Generate different title styles
-                if (themes.length > 0) {
-                    titles.push(`${this.capitalize(themes[0])}: ${this.generateSubtitle(emotion)}`);
-                }
-                
-                titles.push(this.generateQuestionTitle(themes, category));
-                titles.push(this.generateNumberTitle(themes));
-                titles.push(this.generateEmotionalTitle(emotion, themes));
-                titles.push(this.generateActionTitle(themes));
-                
-                return `Títulos inteligentes basados en tu contenido:\n\n${titles.map((t, i) => 
-                    `${i+1}. "${t}"`).join('\n')}\n\n¿Cuál captura mejor tu mensaje?`;
-            }
-            
-            generateContextAwareResponse(prompt, context) {
-                // Build a response using context and patterns
-                const wordCount = context.currentWriting.wordCount;
-                const hasTitle = context.currentWriting.hasTitle;
-                
-                let response = 'Analizando tu pregunta';
-                
-                // Provide specific guidance based on current state
-                if (wordCount === 0 && !hasTitle) {
-                    response = 'Veo que estás comenzando. ¿Qué tema te apasiona? Puedo ayudarte a estructurar tus ideas y encontrar el ángulo perfecto.';
-                } else if (wordCount > 0 && wordCount < 100) {
-                    response = 'Buen comienzo. Tu introducción está tomando forma. ¿Quieres que revise el tono y sugiera formas de enganchar mejor al lector?';
-                } else if (wordCount > 100) {
-                    response = `Llevas ${wordCount} palabras. `;
-                    if (wordCount < 300) {
-                        response += 'Es momento de desarrollar tus puntos principales. ¿Necesitas ayuda con ejemplos o datos de apoyo?';
-                    } else {
-                        response += '¿Cómo va el flujo? Puedo ayudarte con transiciones, conclusión o revisar la coherencia general.';
-                    }
-                }
-                
-                return response;
-            }
-            
-            generateContextualSuggestions(context) {
-                const suggestions = [];
-                const wordCount = context.currentWriting.wordCount;
-                
-                if (wordCount < 50) {
-                    suggestions.push('💡 Tip: Comienza con una anécdota personal o una estadística sorprendente');
-                } else if (wordCount < 200) {
-                    suggestions.push('💡 Tip: Asegúrate de establecer claramente el problema antes de la solución');
-                } else if (wordCount < 500) {
-                    suggestions.push('💡 Tip: Es buen momento para añadir ejemplos concretos');
-                } else {
-                    suggestions.push('💡 Tip: Considera añadir una conclusión con llamada a la acción');
-                }
-                
-                return suggestions.join('\n');
-            }
-            
-            // Helper methods for intelligent generation
-            getCurrentTrends(category) {
-                const trends = {
-                    'ai': ['IA generativa y creatividad', 'Ética en machine learning', 'Automatización inteligente'],
-                    'programming': ['Rust y memoria segura', 'Desarrollo sin código', 'Edge computing'],
-                    'productivity': ['Minimalismo digital', 'Deep work remoto', 'Automatización personal'],
-                    'business': ['Sostenibilidad empresarial', 'Economía de creadores', 'Web3 y descentralización']
-                };
-                return trends[category] || ['Innovación digital', 'Transformación personal'];
-            }
-            
-            analyzeUserInterests() {
-                // Analyze user's writing history to identify interests
-                const topics = this.userProfile.topics;
-                return topics.slice(0, 3);
-            }
-            
-            identifyContentGaps(context) {
-                // Identify what's missing in current content
-                const gaps = [];
-                const content = context.content || '';
-                
-                if (!content.includes('ejemplo')) gaps.push('Añadir ejemplos prácticos');
-                if (!content.includes('?')) gaps.push('Incluir preguntas reflexivas');
-                if (!content.includes('personal')) gaps.push('Compartir experiencia personal');
-                
-                return gaps;
-            }
-            
-            generateCreativeIdea(category) {
-                const templates = [
-                    'Lo que nadie te cuenta sobre',
-                    'La verdad incómoda de',
-                    'Mi experimento de 30 días con',
-                    'Por qué me equivoqué sobre'
-                ];
-                const template = templates[Math.floor(Math.random() * templates.length)];
-                return `${template} ${this.getCategoryTopic(category)}`;
-            }
-            
-            generateControversialIdea(category) {
-                const starters = [
-                    'Por qué deberías dejar de',
-                    'El mito más grande sobre',
-                    'La mentira que todos creen sobre',
-                    'Por qué está mal pensar que'
-                ];
-                const starter = starters[Math.floor(Math.random() * starters.length)];
-                return `${starter} ${this.getCategoryTopic(category)}`;
-            }
-            
-            getCategoryTopic(category) {
-                const topics = {
-                    'ai': 'la inteligencia artificial',
-                    'programming': 'la programación',
-                    'productivity': 'la productividad',
-                    'business': 'los negocios',
-                    'life': 'el desarrollo personal'
-                };
-                return topics[category] || 'este tema';
-            }
-            
-            extractThemes(content) {
-                if (!content) return ['tu tema'];
-                
-                // Simple theme extraction
-                const words = content.split(/\s+/)
-                    .filter(w => w.length > 5)
-                    .map(w => w.toLowerCase());
-                
-                // Count word frequency
-                const freq = {};
-                words.forEach(w => freq[w] = (freq[w] || 0) + 1);
-                
-                // Get top themes
-                return Object.entries(freq)
-                    .sort((a, b) => b[1] - a[1])
-                    .slice(0, 3)
-                    .map(([word]) => word);
-            }
-            
-            detectEmotion(content) {
-                if (!content) return 'neutral';
-                
-                const emotions = {
-                    joy: ['feliz', 'alegría', 'contento', 'emocionado'],
-                    surprise: ['sorprendido', 'asombrado', 'increíble'],
-                    anger: ['enojado', 'frustrado', 'molesto'],
-                    fear: ['miedo', 'temor', 'preocupado']
-                };
-                
-                for (const [emotion, words] of Object.entries(emotions)) {
-                    if (words.some(w => content.toLowerCase().includes(w))) {
-                        return emotion;
-                    }
-                }
-                
-                return 'neutral';
-            }
-            
-            identifyHook(content) {
-                if (!content) return 'question';
-                
-                if (content.startsWith('¿')) return 'question';
-                if (content.match(/^\d+/)) return 'statistic';
-                if (content.includes('imagina')) return 'scenario';
-                if (content.includes('historia') || content.includes('vez')) return 'story';
-                
-                return 'statement';
-            }
-            
-            generateSubtitle(emotion) {
-                const subtitles = {
-                    joy: 'Una perspectiva optimista',
-                    surprise: 'Lo que no esperabas',
-                    anger: 'Es hora de cambiar',
-                    fear: 'Enfrentando la realidad',
-                    neutral: 'Una mirada profunda'
-                };
-                return subtitles[emotion] || 'Lo que necesitas saber';
-            }
-            
-            generateQuestionTitle(themes, category) {
-                const theme = themes[0] || this.getCategoryTopic(category);
-                return `¿Por qué ${theme} está cambiando todo?`;
-            }
-            
-            generateNumberTitle(themes) {
-                const num = Math.floor(Math.random() * 5) + 5;
-                const theme = themes[0] || 'consejos';
-                return `${num} ${theme} que transformarán tu perspectiva`;
-            }
-            
-            generateEmotionalTitle(emotion, themes) {
-                const theme = themes[0] || 'esto';
-                const emotional = {
-                    joy: `La alegría inesperada de ${theme}`,
-                    surprise: `Lo que nunca imaginaste sobre ${theme}`,
-                    anger: `Basta de mentiras sobre ${theme}`,
-                    fear: `El riesgo oculto de ignorar ${theme}`,
-                    neutral: `La verdad sobre ${theme}`
-                };
-                return emotional[emotion] || `Descubriendo ${theme}`;
-            }
-            
-            generateActionTitle(themes) {
-                const theme = themes[0] || 'tu potencial';
-                const actions = ['Domina', 'Transforma', 'Revoluciona', 'Mejora', 'Optimiza'];
-                const action = actions[Math.floor(Math.random() * actions.length)];
-                return `${action} ${theme} en tiempo récord`;
-            }
-            
-            capitalize(str) {
-                return str.charAt(0).toUpperCase() + str.slice(1);
-            }
-            
-            personalizeIdea(interest) {
-                return `Profundizando en ${interest}: Nuevas perspectivas y aplicaciones`;
-            }
-            
-            generateStructureAdvice(context) {
-                const wordCount = context.currentWriting.wordCount;
-                const structure = [];
-                
-                if (wordCount === 0) {
-                    structure.push('1. Hook (50 palabras): Captura atención inmediata');
-                    structure.push('2. Contexto (150 palabras): Establece el problema');
-                    structure.push('3. Desarrollo (400 palabras): Tu argumento principal');
-                    structure.push('4. Ejemplos (200 palabras): Casos concretos');
-                    structure.push('5. Conclusión (100 palabras): CTA claro');
-                } else if (wordCount < 200) {
-                    structure.push('Siguiente: Desarrolla el problema con datos o historias');
-                    structure.push('Después: Presenta tu perspectiva única');
-                } else {
-                    structure.push('Revisa: ¿Cada párrafo tiene una idea clara?');
-                    structure.push('Mejora: Añade transiciones entre secciones');
-                    structure.push('Finaliza: Conclusión memorable con acción específica');
-                }
-                
-                return `Estructura recomendada:\n\n${structure.join('\n')}`;
-            }
-            
-            analyzeGrammar(text) {
-                if (!text) return 'Escribe algo para que pueda analizar la gramática.';
-                
-                const issues = [];
-                
-                // Check for common Spanish errors
-                const commonErrors = {
-                    'hubieron': 'hubo',
-                    'habian': 'había',
-                    'a nivel de': 'en cuanto a',
-                    'en base a': 'basándose en',
-                    'detras': 'detrás',
-                    'atraves': 'a través'
-                };
-                
-                for (const [error, correction] of Object.entries(commonErrors)) {
-                    if (text.toLowerCase().includes(error)) {
-                        issues.push(`• Cambiar "${error}" por "${correction}"`);
-                    }
-                }
-                
-                // Check for missing accents (simplified)
-                const accentWords = {
-                    'mas': 'más',
-                    'si': 'sí',
-                    'tu': 'tú',
-                    'el': 'él',
-                    'esta': 'está',
-                    'como': 'cómo'
-                };
-                
-                // Context-aware accent checking would go here
-                
-                if (issues.length === 0) {
-                    return 'Tu gramática se ve bien. Recuerda revisar acentos y puntuación.';
-                }
-                
-                return `Sugerencias de gramática:\n\n${issues.join('\n')}`;
-            }
-            
-            learnFromInteraction(prompt, response, intent) {
-                // Save interaction patterns
-                const interaction = {
-                    prompt: prompt,
-                    response: response,
-                    intent: intent,
-                    timestamp: Date.now(),
-                    successful: true
-                };
-                
-                // Update user profile
-                if (intent.entities.length > 0) {
-                    intent.entities.forEach(entity => {
-                        if (entity.type === 'topic' && !this.userProfile.topics.includes(entity.value)) {
-                            this.userProfile.topics.push(entity.value);
-                        }
-                    });
-                }
-                
-                // Save learning
-                const history = JSON.parse(localStorage.getItem('aiInteractionHistory') || '[]');
-                history.push(interaction);
-                if (history.length > 100) history.shift(); // Keep last 100 interactions
-                
-                localStorage.setItem('aiInteractionHistory', JSON.stringify(history));
-                localStorage.setItem('userTopics', JSON.stringify(this.userProfile.topics));
-            }
-            
-            
-            formatPromptForProvider(provider, userPrompt, messages) {
-                const systemPrompt = messages.find(m => m.role === 'system')?.content || '';
-                const context = messages.filter(m => m.role !== 'system').map(m => 
-                    `${m.role === 'user' ? 'Usuario' : 'Asistente'}: ${m.content}`
-                ).join('\n');
-                
-                if (provider.name === 'Cohere' || provider.name === 'HuggingFace') {
-                    return `${systemPrompt}\n\nConversación:\n${context}\n\nUsuario: ${userPrompt}\n\nAsistente:`;
-                }
-                return userPrompt;
-            }
-            
-            setApiKey(key, providerName = null) {
-                if (providerName) {
-                    const provider = this.providers.find(p => p.name === providerName);
-                    if (provider) {
-                        provider.apiKey = key;
-                        localStorage.setItem(`${providerName}_api_key`, key);
-                    }
-                }
-            }
+            sessionStorage.removeItem('postDraft');
         }
-        
-        // Initialize AI Assistant
-        const aiAssistant = new AIAssistant();
-        
-        // Enhanced chat with real AI
-        async function sendChatMessageWithAI() {
-            try {
-                const input = document.getElementById('chatInput');
-                const message = input.value.trim();
-                if (!message) return;
-                
-                const chat = document.getElementById('aiChat');
-                
-                // Add user message
-                chat.innerHTML += `
-                    <div class="chat-message user">
-                        <span class="chat-author">TÚ:</span>
-                        <span class="chat-text">${message}</span>
-                    </div>
-                `;
-                
-                // Show typing indicator
-                const typingId = 'typing-' + Date.now();
-                chat.innerHTML += `
-                    <div class="chat-message assistant" id="${typingId}">
-                        <span class="chat-author">AI:</span>
-                        <span class="chat-text">Pensando...</span>
-                    </div>
-                `;
-                chat.scrollTop = chat.scrollHeight;
-                
-                // Get AI response
-                const context = {
-                    category: document.getElementById('postCategory').value,
-                    content: document.getElementById('postContent').innerText,
-                    title: document.getElementById('postTitle').value,
-                    style: userWritingStyle
-                };
-                
-                console.log('Sending message to AI:', message);
-                const response = await aiAssistant.generateResponse(message, context);
-                console.log('AI response:', response);
-                
-                // Replace typing indicator with response
-                const typingElement = document.getElementById(typingId);
-                if (typingElement) {
-                    typingElement.innerHTML = `
-                        <span class="chat-author">AI:</span>
-                        <span class="chat-text">${response.replace(/\n/g, '<br>')}</span>
-                    `;
-                }
-                
-                input.value = '';
-                chat.scrollTop = chat.scrollHeight;
-            } catch (error) {
-                console.error('Error in sendChatMessage:', error);
-                alert('Error: ' + error.message);
-            }
-        }
-        
-        // Make sure function is globally available
-        window.sendChatMessage = sendChatMessageWithAI;
-        window.sendChatMessageWithAI = sendChatMessageWithAI;
-        
-        // Add API status UI
-        function showApiStatus() {
-            const providers = aiAssistant.providers;
-            const status = providers.map(p => 
-                `${p.name}: ${p.active ? '✓ Activo' : '✗ Inactivo'}`
-            ).join('\n');
+
+        // Category selector function
+        function selectCategory(element) {
+            // Remove active from all
+            document.querySelectorAll('.category-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
             
-            alert(`Estado de APIs de AI:\n\n${status}\n\nEl sistema cambiará automáticamente entre proveedores según disponibilidad.`);
-        }
-        
-        // Add configuration button to AI panel
-        setTimeout(() => {
-            const aiHeader = document.querySelector('.ai-assistant-header');
-            if (aiHeader && !document.getElementById('aiConfigBtn')) {
-                const configBtn = document.createElement('button');
-                configBtn.id = 'aiConfigBtn';
-                configBtn.innerHTML = '⚙';
-                configBtn.style.cssText = 'background: none; border: none; color: white; font-size: 20px; cursor: pointer; margin-left: auto; margin-right: 10px;';
-                configBtn.onclick = showApiStatus;
-                configBtn.title = 'Configurar AI';
-                aiHeader.insertBefore(configBtn, aiHeader.querySelector('.assistant-toggle'));
-            }
-        }, 1000);
-        
-        // Make functions globally available
-        window.generateIdeas = generateIdeas;
-        window.improveStyle = improveStyle;
-        window.toggleAssistant = toggleAssistant;
-        window.switchAssistantTab = switchAssistantTab;
-        
-        // Initialize
-        loadWritingStyle();
-        loadDraft();
-        updateStats();
-        
-        // Make sure AI is ready
-        setTimeout(() => {
-            console.log('AI Assistant initialized:', aiAssistant);
-            console.log('Functions available:');
-            console.log('- sendChatMessage:', typeof window.sendChatMessage);
-            console.log('- generateIdeas:', typeof window.generateIdeas);
+            // Add active to clicked
+            element.classList.add('active');
             
-            // Test the AI
-            if (aiAssistant) {
-                console.log('✓ AI is ready to respond!');
-            }
-        }, 1000);
+            // Update hidden input
+            document.getElementById('postCategory').value = element.dataset.value;
+            
+            // Add animation effect
+            element.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                element.style.transform = '';
+            }, 100);
+        }
     </script>
 </body>
 </html>
