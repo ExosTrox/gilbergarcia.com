@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Gilber Garcia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --text-primary: #1a1a1a;
+            --text-secondary: #4a4a4a;
+            --text-light: #7a7a7a;
+            --bg-primary: #f8f8f0;
+            --bg-secondary: #e8e8d8;
+            --accent: #ff6b9d;
+            --accent-hover: #ff4757;
+            --accent-alt: #00d2d3;
+            --success: #26de81;
+            --warning: #fed330;
+            --border: #2a2a2a;
+            --max-width: 1200px;
+        }
+
+        body {
+            font-family: 'VT323', monospace;
+            font-size: 20px;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            padding: 30px 0;
+            background: var(--bg-secondary);
+            margin-bottom: 40px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 16px;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            text-shadow: 2px 2px 0 var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 18px;
+            padding: 8px 16px;
+            background: var(--bg-primary);
+            border: 2px solid var(--border);
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+        }
+
+        .nav-link:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        .admin-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        /* Editor Section */
+        .editor-section {
+            background: white;
+            padding: 30px;
+            border-radius: 0;
+            box-shadow: 0 0 0 3px var(--border);
+        }
+
+        .section-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 18px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border);
+            background: var(--bg-primary);
+            font-family: 'VT323', monospace;
+            font-size: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: white;
+        }
+
+        .form-textarea {
+            min-height: 300px;
+            resize: vertical;
+        }
+
+        .editor-actions {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: 3px solid var(--border);
+            background: var(--bg-primary);
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-secondary);
+            transform: translateY(-2px);
+        }
+
+        /* Posts List */
+        .posts-section {
+            background: white;
+            padding: 30px;
+            box-shadow: 0 0 0 3px var(--border);
+        }
+
+        .posts-list {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .post-item {
+            padding: 20px;
+            margin-bottom: 15px;
+            background: var(--bg-primary);
+            border: 2px solid var(--border);
+            transition: all 0.2s ease;
+        }
+
+        .post-item:hover {
+            background: var(--bg-secondary);
+            transform: translateX(5px);
+        }
+
+        .post-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .post-meta {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .post-btn {
+            padding: 6px 12px;
+            border: 2px solid var(--border);
+            background: white;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+        }
+
+        .post-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        .post-btn.delete:hover {
+            background: var(--accent-hover);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        /* Status Message */
+        .status-message {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: var(--success);
+            color: white;
+            border: 3px solid var(--border);
+            font-family: 'VT323', monospace;
+            font-size: 18px;
+            text-transform: uppercase;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        .status-message.show {
+            display: block;
+        }
+
+        .status-message.error {
+            background: var(--accent-hover);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        /* Category Selector */
+        .category-selector {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .category-option {
+            flex: 1;
+            min-width: 100px;
+            padding: 15px 10px;
+            background: white;
+            border: 3px solid var(--border);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 0;
+            background: var(--accent);
+            transition: height 0.3s ease;
+            z-index: 0;
+        }
+
+        .category-option.active::before {
+            height: 100%;
+        }
+
+        .category-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 0 rgba(0,0,0,0.2);
+        }
+
+        .category-option.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent-hover);
+            box-shadow: 0 3px 0 var(--accent-hover);
+        }
+
+        .category-icon {
+            display: block;
+            font-size: 28px;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+            filter: grayscale(100%);
+            transition: all 0.2s ease;
+        }
+
+        .category-option.active .category-icon,
+        .category-option:hover .category-icon {
+            filter: grayscale(0%);
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .category-name {
+            display: block;
+            font-family: 'VT323', monospace;
+            font-size: 16px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 1px;
+        }
+
+        .category-option.active .category-name {
+            font-weight: bold;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .admin-content {
+                grid-template-columns: 1fr;
+            }
+            .category-selector {
+                flex-direction: column;
+            }
+            .category-option {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Admin Panel</div>
+                <div class="nav-links">
+                    <a href="/" class="nav-link">Ver Sitio</a>
+                    <a href="#" class="nav-link" onclick="logout()">Salir</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="admin-content">
+            <!-- Editor Section -->
+            <section class="editor-section">
+                <h2 class="section-title">Crear Nueva Entrada</h2>
+                
+                <div class="form-group">
+                    <label class="form-label">Título</label>
+                    <input type="text" class="form-input" id="postTitle" placeholder="Título del post...">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Descripción</label>
+                    <input type="text" class="form-input" id="postDescription" placeholder="Breve descripción...">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Categoría</label>
+                    <div class="category-selector" id="categorySelector">
+                        <div class="category-option active" data-value="technology" onclick="selectCategory(this)">
+                            <span class="category-icon">💻</span>
+                            <span class="category-name">Technology</span>
+                        </div>
+                        <div class="category-option" data-value="productivity" onclick="selectCategory(this)">
+                            <span class="category-icon">⚡</span>
+                            <span class="category-name">Productivity</span>
+                        </div>
+                        <div class="category-option" data-value="programming" onclick="selectCategory(this)">
+                            <span class="category-icon">🚀</span>
+                            <span class="category-name">Programming</span>
+                        </div>
+                        <div class="category-option" data-value="life" onclick="selectCategory(this)">
+                            <span class="category-icon">🌟</span>
+                            <span class="category-name">Life</span>
+                        </div>
+                        <div class="category-option" data-value="business" onclick="selectCategory(this)">
+                            <span class="category-icon">📈</span>
+                            <span class="category-name">Business</span>
+                        </div>
+                    </div>
+                    <input type="hidden" id="postCategory" value="technology">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Contenido</label>
+                    <textarea class="form-textarea" id="postContent" placeholder="Escribe tu contenido aquí..."></textarea>
+                </div>
+
+                <div class="editor-actions">
+                    <button class="btn btn-primary" onclick="savePost()">Publicar</button>
+                    <button class="btn btn-secondary" onclick="saveDraft()">Guardar Borrador</button>
+                    <button class="btn btn-secondary" onclick="clearForm()">Limpiar</button>
+                </div>
+            </section>
+
+            <!-- Posts List -->
+            <section class="posts-section">
+                <h2 class="section-title">Entradas</h2>
+                <div class="posts-list" id="postsList">
+                    <!-- Posts will be loaded here -->
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Status Message -->
+    <div class="status-message" id="statusMessage"></div>
+
+    <script>
+        // Check authentication
+        if (!sessionStorage.getItem('isAdminAuth')) {
+            window.location.href = '/';
+        }
+
+        let editingPostId = null;
+
+        // Load posts on page load
+        document.addEventListener('DOMContentLoaded', loadPosts);
+
+        function loadPosts() {
+            const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+            const postsList = document.getElementById('postsList');
+            
+            if (posts.length === 0) {
+                postsList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📝</div>
+                        <p>No hay entradas todavía</p>
+                    </div>
+                `;
+                return;
+            }
+
+            postsList.innerHTML = posts.map(post => `
+                <div class="post-item">
+                    <div class="post-title">${post.title}</div>
+                    <div class="post-meta">${new Date(post.dateISO || post.date).toLocaleDateString()} • ${post.category || 'General'}</div>
+                    <div class="post-actions">
+                        <button class="post-btn" onclick="editPost('${post.id}')">Editar</button>
+                        <button class="post-btn delete" onclick="deletePost('${post.id}')">Eliminar</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function savePost() {
+            const title = document.getElementById('postTitle').value.trim();
+            const description = document.getElementById('postDescription').value.trim();
+            const content = document.getElementById('postContent').value.trim();
+            const category = document.getElementById('postCategory').value;
+
+            if (!title || !content) {
+                showStatus('Por favor completa título y contenido', 'error');
+                return;
+            }
+
+            const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+            
+            if (editingPostId) {
+                // Update existing post
+                const postIndex = posts.findIndex(p => p.id === editingPostId);
+                if (postIndex !== -1) {
+                    posts[postIndex] = {
+                        ...posts[postIndex],
+                        title,
+                        description,
+                        content,
+                        category,
+                        updatedAt: new Date().toISOString()
+                    };
+                }
+                editingPostId = null;
+            } else {
+                // Create new post
+                const newPost = {
+                    id: Date.now().toString(),
+                    title,
+                    description,
+                    content,
+                    category,
+                    dateISO: new Date().toISOString(),
+                    date: new Date().getDate().toString(),
+                    author: 'Gilber Garcia'
+                };
+                posts.unshift(newPost);
+            }
+
+            localStorage.setItem('blogPosts', JSON.stringify(posts));
+            clearForm();
+            loadPosts();
+            showStatus('Entrada publicada exitosamente');
+        }
+
+        function saveDraft() {
+            // Save to session storage as draft
+            const draft = {
+                title: document.getElementById('postTitle').value,
+                description: document.getElementById('postDescription').value,
+                content: document.getElementById('postContent').value,
+                category: document.getElementById('postCategory').value
+            };
+            sessionStorage.setItem('postDraft', JSON.stringify(draft));
+            showStatus('Borrador guardado');
+        }
+
+        function editPost(id) {
+            const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+            const post = posts.find(p => p.id === id);
+            
+            if (post) {
+                document.getElementById('postTitle').value = post.title || '';
+                document.getElementById('postDescription').value = post.description || '';
+                document.getElementById('postContent').value = post.content || '';
+                // Set category
+                const categoryValue = post.category || 'technology';
+                document.getElementById('postCategory').value = categoryValue;
+                
+                // Update visual selector
+                document.querySelectorAll('.category-option').forEach(opt => {
+                    opt.classList.remove('active');
+                    if (opt.dataset.value === categoryValue) {
+                        opt.classList.add('active');
+                    }
+                });
+                editingPostId = id;
+                
+                // Scroll to editor
+                document.querySelector('.editor-section').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function deletePost(id) {
+            if (confirm('¿Estás seguro de eliminar esta entrada?')) {
+                const posts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
+                const filtered = posts.filter(p => p.id !== id);
+                localStorage.setItem('blogPosts', JSON.stringify(filtered));
+                loadPosts();
+                showStatus('Entrada eliminada');
+            }
+        }
+
+        function clearForm() {
+            document.getElementById('postTitle').value = '';
+            document.getElementById('postDescription').value = '';
+            document.getElementById('postContent').value = '';
+            document.getElementById('postCategory').value = 'technology';
+            
+            // Reset category selector
+            document.querySelectorAll('.category-option').forEach(opt => {
+                opt.classList.remove('active');
+                if (opt.dataset.value === 'technology') {
+                    opt.classList.add('active');
+                }
+            });
+            editingPostId = null;
+        }
+
+        function showStatus(message, type = 'success') {
+            const status = document.getElementById('statusMessage');
+            status.textContent = message;
+            status.className = `status-message show ${type}`;
+            
+            setTimeout(() => {
+                status.classList.remove('show');
+            }, 3000);
+        }
+
+        function logout() {
+            sessionStorage.removeItem('isAdminAuth');
+            window.location.href = '/';
+        }
+
+        // Load draft if exists
+        const draft = sessionStorage.getItem('postDraft');
+        if (draft) {
+            const draftData = JSON.parse(draft);
+            if (confirm('Hay un borrador guardado. ¿Quieres cargarlo?')) {
+                document.getElementById('postTitle').value = draftData.title || '';
+                document.getElementById('postDescription').value = draftData.description || '';
+                document.getElementById('postContent').value = draftData.content || '';
+                // Set category
+                const categoryValue = draftData.category || 'technology';
+                document.getElementById('postCategory').value = categoryValue;
+                
+                // Update visual selector
+                document.querySelectorAll('.category-option').forEach(opt => {
+                    opt.classList.remove('active');
+                    if (opt.dataset.value === categoryValue) {
+                        opt.classList.add('active');
+                    }
+                });
+            }
+            sessionStorage.removeItem('postDraft');
+        }
+
+        // Category selector function
+        function selectCategory(element) {
+            // Remove active from all
+            document.querySelectorAll('.category-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            
+            // Add active to clicked
+            element.classList.add('active');
+            
+            // Update hidden input
+            document.getElementById('postCategory').value = element.dataset.value;
+            
+            // Add animation effect
+            element.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                element.style.transform = '';
+            }, 100);
+        }
+    </script>
+</body>
+</html>
